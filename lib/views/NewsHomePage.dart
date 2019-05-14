@@ -89,7 +89,7 @@ class HomePageDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        
+        elevation: 16.0,
         child: ListView(
         // 去掉顶部灰色区域
         padding: EdgeInsets.all(0),

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import '../models/news_entity.dart';
+import 'DetailView.dart';
 
 // 中央新闻列表类 ListViewDemo
 class ListViewDemo extends StatelessWidget {
   Widget _listItemBuilder(BuildContext context, int index) {
     return GestureDetector(
-      onTap: () {}, // 按键操作留空
+      onTap: () {
+        // 单击进入新闻详情页
+        // Navigator.pushNamed(context, '/detail');
+        Navigator.of(context).push(        
+          MaterialPageRoute(builder: (context) => DetailView(title: '新闻详情', news: NewsList[index]))
+        );
+      }, 
       child: new Card(
         child: new Material(
             child: new InkWell(
@@ -28,14 +35,21 @@ class ListViewDemo extends StatelessWidget {
                         new Expanded(
                             child: new Container(
                                 padding: const EdgeInsets.all(0.0),
-                                child: new SizedBox(
-                                  // 插入新闻图片
-                                  child: new Image.network(
-                                    NewsList[index].picurl1,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  height: 200.0,
-                                )))
+                                // child: new SizedBox(
+                                //   // 插入新闻图片
+                                //   child: new Image.network(
+                                //     NewsList[index].picurl1,
+                                //     fit: BoxFit.fitWidth,
+                                //   ),
+                                //   height: 200.0,
+                                // )
+                                // 以16:9的比例显示图片
+                                child: AspectRatio(
+                                  aspectRatio: 16/9,
+                                  child: Image.network(NewsList[index].picurl1,fit: BoxFit.cover,),
+                                )
+                            )
+                          )
                       ],
                     ),
                     new Row(
@@ -65,6 +79,7 @@ class ListViewDemo extends StatelessWidget {
                             // 增加一个推荐按钮(菜单?)
                             child: new IconButton(
                               icon: Icon(Icons.more_horiz),
+                              tooltip: "单击推荐更多相似新闻",
                               // 推荐按钮点击事件
                               onPressed: (){},
                               color: Colors.grey,
