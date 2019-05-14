@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'model/news.dart';
-import 'listview.dart';
+import '../models/news_entity.dart';
+import 'ListView.dart';
 
-// 应用启动首页
+// 应用启动首页类 NewsHomePage
 //Stateful widget可以拥有状态，这些状态在widget生命周期中是可以变的
 //Stateful widget至少由两个类组成：一个StatefulWidget类 和 一个 State类
 //两个类的关系:StatefulWidget类本身是不变的，但是 State类中持有的状态在widget生命周期中可能会发生变化

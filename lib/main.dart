@@ -1,6 +1,6 @@
 // main.dart只作为App入口函数
 import 'package:flutter/material.dart';
-import 'package:news_app_flutter/NewsHomePage.dart';
+import './views/NewsHomePage.dart';
 
 void main() => runApp(NewsApp());
 
