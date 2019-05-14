@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'model/news.dart';
+import 'listview.dart';
 
 // 应用启动首页
 //Stateful widget可以拥有状态，这些状态在widget生命周期中是可以变的
@@ -17,6 +19,7 @@ class _NewsHomePageState extends State<NewsHomePage>
     with SingleTickerProviderStateMixin {
   // 引入SingleTickerProviderStateMixin 实现Tab栏切换动态效果
 
+  // Tabs
   TabController _tabController; // 需要定义一个Controller
   List tabs = [
     "国内",
@@ -33,8 +36,9 @@ class _NewsHomePageState extends State<NewsHomePage>
     "科技",
     "互联网",
     "房地产",
-  ]; // 显示在tab中的新闻频道列表
-  @override
+  ]; 
+
+ @override
   void initState() {
     super.initState();
     // 创建Controller
@@ -66,34 +70,15 @@ class _NewsHomePageState extends State<NewsHomePage>
             // ],
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
-      body: new TabBarView(
-        controller: _tabController,
-        // children: <Widget>[
-        //   new Center(child: new Text('国内')),
-        //   new Center(child: new Text('国际')),
-        //   new Center(child: new Text('财经')),
-        // ],
-        children: tabs.map((e) {
-          //自动创建tabs.length个Container来显示各频道的数据
-          return Container(
-            alignment: Alignment.center,
-            child: Text(e, textScaleFactor: 5),
-          );
-        }).toList(),
-      ),
+      body: ListViewDemo(),
       drawer: HomePageDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-        // 底部导航
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), title: Text('推荐')),
-          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('用户')),
-        ],
-      ),
+      // 底部导航
+      bottomNavigationBar: HomePageNavigationBar(),
     );
   }
 }
+
+
 
 // 左侧抽屉菜单类
 class HomePageDrawer extends StatelessWidget {
@@ -104,6 +89,7 @@ class HomePageDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+        
         child: ListView(
         // 去掉顶部灰色区域
         padding: EdgeInsets.all(0),
@@ -125,22 +111,71 @@ class HomePageDrawer extends StatelessWidget {
                     image: AssetImage('assets/images/AvatarBackground.jpg'))),
           ),
           ListTile(
-            leading: Icon(Icons.message, size: 22.0,),
-            title: Text('注册登陆', textAlign: TextAlign.left,)
+            leading: Icon(Icons.portrait, size: 25.0,),
+            title: Text('注册登陆', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
           ),
           ListTile(
-            
-            title: Text('我的收藏', textAlign: TextAlign.left,)
+            leading: Icon(Icons.favorite, size: 25.0,),
+            title: Text('我的收藏', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
           ),
           ListTile(
-
-            title: Text('浏览历史', textAlign: TextAlign.left,)
+            leading: Icon(Icons.history, size: 25.0,),
+            title: Text('浏览历史', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
           ),
           ListTile(
-
-            title: Text('用户设置', textAlign: TextAlign.left,)
+            leading: Icon(Icons.settings, size: 25.0,),
+            title: Text('用户设置', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
+          ),
+          Divider(),
+            ListTile(
+            leading: Icon(Icons.add_to_home_screen, size: 25.0,),
+            title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
+          ),
+            ListTile(
+            leading: Icon(Icons.cancel, size: 25.0,),
+            title: Text('关闭菜单', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.pop(context),
           ),
       ],
     ));
+  }
+}
+
+
+
+// 底部导航栏
+class HomePageNavigationBar extends StatefulWidget {
+
+  @override
+  _HomePageNavigationBarState createState() => _HomePageNavigationBarState();
+}
+
+class _HomePageNavigationBarState extends State<HomePageNavigationBar> {
+  
+  int _currentIndex = 0;
+  void _onTapHandler(int index){
+    setState(() {
+      _currentIndex = index ;
+    });
+  }
+ 
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        onTap: _onTapHandler,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border), title: Text('推荐')),
+          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('用户')),
+        ],
+      );
   }
 }
