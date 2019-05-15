@@ -76,14 +76,30 @@ class ListViewDemo extends StatelessWidget {
                         new Container(
                             alignment: Alignment.centerRight,
                             padding: const EdgeInsets.all(0.0),
-                            // 增加一个推荐按钮(菜单?)
-                            child: new IconButton(
-                              icon: Icon(Icons.more_horiz),
-                              tooltip: "单击推荐更多相似新闻",
-                              // 推荐按钮点击事件
-                              onPressed: (){},
-                              color: Colors.grey,
+                            // 增加一个弹出式菜单
+                            child: Row(
+                              children: <Widget>[
+                                new PopupMenuButton(
+                                  // 
+                                  onSelected: (value){
+                                    print(value);
+                                  },
+                                  icon: Icon(Icons.more_horiz, color: Colors.grey,),
+                                  itemBuilder: (BuildContext context) => [
+                                    PopupMenuItem(
+                                      value: 'shoucang',
+                                      child: Text('添加到我的收藏',),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'tuijian',
+                                      child: Text('推荐更多相似新闻',),
+                                    ),
+                                  ],
+                                ),
+
+                              ],
                             )
+
                         ),
                       ],
                     )

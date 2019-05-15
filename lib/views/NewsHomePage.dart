@@ -16,6 +16,7 @@ class NewsHomePage extends StatefulWidget {
   _NewsHomePageState createState() => _NewsHomePageState();
 }
 
+
 class _NewsHomePageState extends State<NewsHomePage>
     with SingleTickerProviderStateMixin {
   // 引入SingleTickerProviderStateMixin 实现Tab栏切换动态效果
@@ -52,32 +53,41 @@ class _NewsHomePageState extends State<NewsHomePage>
   }
 
   @override
-  // 在_State类中实现Build方法绘制界面
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        // 导航栏右侧菜单键
+        centerTitle: true,
         actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
         bottom: TabBar(
             // 设置为被选中标签字体为深黑色
             unselectedLabelColor: Colors.black87,
             controller: _tabController,
             isScrollable: true,
-            // tabs: <Widget>[
-            //   Tab(text: "国内"),
-            //   Tab(text: "国际"),
-            //   Tab(text: "财经"),
-            // ],
             tabs: tabs.map((e) => Tab(text: e)).toList()),
       ),
-      body: ListViewDemo(),
+      //TabBarView组件，它可以很轻松的配合TabBar来实现同步切换和滑动状态同步
+      body: TabBarView(
+        controller: _tabController,
+        children: tabs.map((e){
+          return Container(
+            alignment: Alignment.center,
+            child: ListViewDemo(),
+          );
+        }).toList()
+
+      ),
+
+
+
       drawer: HomePageDrawer(),
       // 底部导航
       bottomNavigationBar: HomePageNavigationBar(),
     );
   }
 }
+
+
 
 
 
@@ -114,7 +124,7 @@ class HomePageDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.portrait, size: 25.0,),
             title: Text('注册登陆', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=> Navigator.pop(context),
+            onTap: ()=> Navigator.of(context).pushNamed("/reg"),
           ),
           ListTile(
             leading: Icon(Icons.favorite, size: 25.0,),
@@ -135,7 +145,7 @@ class HomePageDrawer extends StatelessWidget {
             ListTile(
             leading: Icon(Icons.add_to_home_screen, size: 25.0,),
             title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebAdminPage())),
+            onTap: ()=> Navigator.of(context).pushNamed("/xadmin"),
           ),
             ListTile(
             leading: Icon(Icons.cancel, size: 25.0,),
@@ -173,8 +183,7 @@ class _HomePageNavigationBarState extends State<HomePageNavigationBar> {
         onTap: _onTapHandler,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), title: Text('推荐')),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), title: Text('推荐')),
           BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('用户')),
         ],
       );

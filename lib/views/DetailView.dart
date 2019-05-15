@@ -22,7 +22,9 @@ class DetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
         elevation: 0.0,
+        centerTitle: true,
       ),
         body: new SingleChildScrollView(
           child:Container(
@@ -67,13 +69,12 @@ class DetailView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   child: HtmlTextView(data: news.html),
-                ),
-                //最好增加一个竖排的按钮组, 一个用于返回,一个用于访问原链接          
+                ),        
               ],
             ),
           ) 
         ),
-      // 添加浮动返回按钮
+      // 添加浮动按钮
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.open_in_new),
         onPressed: (){
