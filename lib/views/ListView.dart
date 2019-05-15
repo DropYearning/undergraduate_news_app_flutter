@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import '../models/news_entity.dart';
 import 'DetailView.dart';
+import 'dart:async';
+
+enum titleColor {
+      black,
+      grey,
+}
+
 
 // 中央新闻列表类 ListViewDemo
 class ListViewDemo extends StatelessWidget {
+
+
   Widget _listItemBuilder(BuildContext context, int index) {
+
+    Color _titleColor = Colors.black;
+
     return GestureDetector(
       onTap: () {
         // 单击进入新闻详情页
-        // Navigator.pushNamed(context, '/detail');
         Navigator.of(context).push(        
           MaterialPageRoute(builder: (context) => DetailView(title: '新闻详情', news: NewsList[index]))
         );
+        // 实现页面点击后标题变灰的功能
+        
       }, 
       child: new Card(
         child: new Material(
@@ -27,7 +40,7 @@ class ListViewDemo extends StatelessWidget {
                         child: new Text(
                           // 插入新闻标题
                           NewsList[index].title,
-                          style: new TextStyle(fontSize: 20.0),
+                          style: new TextStyle(fontSize: 20.0, color: _titleColor,),
                         )),
                     new Row(
                       mainAxisSize: MainAxisSize.max,
@@ -35,15 +48,6 @@ class ListViewDemo extends StatelessWidget {
                         new Expanded(
                             child: new Container(
                                 padding: const EdgeInsets.all(0.0),
-                                // child: new SizedBox(
-                                //   // 插入新闻图片
-                                //   child: new Image.network(
-                                //     NewsList[index].picurl1,
-                                //     fit: BoxFit.fitWidth,
-                                //   ),
-                                //   height: 200.0,
-                                // )
-                                // 以16:9的比例显示图片
                                 child: AspectRatio(
                                   aspectRatio: 16/9,
                                   child: Image.network(NewsList[index].picurl1,fit: BoxFit.cover,),

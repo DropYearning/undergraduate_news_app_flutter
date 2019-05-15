@@ -4,13 +4,12 @@ import 'package:flutter_html_textview/flutter_html_textview.dart';
 // 在App中打开内置浏览器
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+// 显示管理后台的页面
 class WebAdminPage extends StatelessWidget {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   @override
   Widget build(BuildContext context) {
-    Widget WebScreen = MaterialApp(
-      routes: {
-        "/": (_) => new WebviewScaffold(
+    Widget WebScreen = new WebviewScaffold(
             url: "http://111.231.57.151:8000/xadmin/",
             // 自添加带返回操作的appbar
             withZoom: true,
@@ -23,19 +22,17 @@ class WebAdminPage extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () {
                       //按钮事件
-
-
                     }
                   );
                 },
               ),
-            )),
-      },
-    );
+            )
+          );
     return WebScreen;
   }
 }
 
+// 显示新闻原网站页面
 class WebNewsPage extends StatelessWidget {
   final NewsEntity news; //新闻数据对象
 
@@ -45,13 +42,12 @@ class WebNewsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget WebScreen = MaterialApp(
-      routes: {
-        "/": (_) => new WebviewScaffold(
+    Widget WebScreen = new WebviewScaffold(
               url: news.link,
               appBar: new AppBar(
                 centerTitle: true,
-                title: new Text("访问源链接"),
+                title: new Text("新闻源链接"),
+                actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
                 leading: Builder(
                 builder: (BuildContext context) {
                   return IconButton(
@@ -61,9 +57,7 @@ class WebNewsPage extends StatelessWidget {
                 },
               ),
               ),
-            ),
-      },
-    );
+            );
     return WebScreen;
   }
 }
