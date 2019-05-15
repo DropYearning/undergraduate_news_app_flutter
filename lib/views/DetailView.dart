@@ -77,9 +77,7 @@ class DetailView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.open_in_new),
         onPressed: (){
-          Navigator.of(context).push(        
-          MaterialPageRoute(builder: (context) => WebViewPage(news: this.news))
-        );
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebNewsPage(news: this.news)));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

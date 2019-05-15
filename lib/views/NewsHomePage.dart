@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/news_entity.dart';
 import 'ListView.dart';
+import 'WebView.dart';
 
 // 应用启动首页类 NewsHomePage
 //Stateful widget可以拥有状态，这些状态在widget生命周期中是可以变的
@@ -134,7 +135,7 @@ class HomePageDrawer extends StatelessWidget {
             ListTile(
             leading: Icon(Icons.add_to_home_screen, size: 25.0,),
             title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=> Navigator.pop(context),
+            onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebAdminPage())),
           ),
             ListTile(
             leading: Icon(Icons.cancel, size: 25.0,),

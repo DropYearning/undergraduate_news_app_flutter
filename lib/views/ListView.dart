@@ -107,7 +107,7 @@ class ListViewDemo extends StatelessWidget {
 
 
 
-// 中央新闻列表类 ListViewDemo2
+// 中央新闻列表类 ListViewDemo2 
 class ListViewDemo2 extends StatelessWidget {
   Widget _listItemBuilder(BuildContext context, int index) {
     return GestureDetector(
@@ -126,7 +126,10 @@ class ListViewDemo2 extends StatelessWidget {
                 child: new Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                  
+                  //在这里添加部件
+
+
+
 
                   ],
                 ),
