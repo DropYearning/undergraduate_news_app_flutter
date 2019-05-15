@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import './views/NewsHomePage.dart';
 import './views/DetailView.dart';
+import './views/WebView.dart';
 
 void main() => runApp(NewsApp());
 

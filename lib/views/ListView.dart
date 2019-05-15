@@ -23,7 +23,7 @@ class ListViewDemo extends StatelessWidget {
                   children: <Widget>[
                     new Container(
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(bottom: 1.0),
+                        padding: const EdgeInsets.only(bottom: 5.0),
                         child: new Text(
                           // 插入新闻标题
                           NewsList[index].title,
@@ -57,7 +57,7 @@ class ListViewDemo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         new Container(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(0.0),
                             // 插入新闻发布时间
                             child: new Text(
                               "${NewsList[index].source}  ",
@@ -66,7 +66,7 @@ class ListViewDemo extends StatelessWidget {
                             ),
                           ),
                         new Container(
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(0.0),
                             // 插入新闻来源
                             child: new Text(
                               "${NewsList[index].pubtime}",
@@ -75,7 +75,7 @@ class ListViewDemo extends StatelessWidget {
                             )),
                         new Container(
                             alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(0.0),
                             // 增加一个推荐按钮(菜单?)
                             child: new IconButton(
                               icon: Icon(Icons.more_horiz),
@@ -87,6 +87,47 @@ class ListViewDemo extends StatelessWidget {
                         ),
                       ],
                     )
+                  ],
+                ),
+              ),
+            ),
+            color: Colors.transparent),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: NewsList.length,
+      itemBuilder: _listItemBuilder,
+    );
+  }
+}
+
+
+
+// 中央新闻列表类 ListViewDemo2
+class ListViewDemo2 extends StatelessWidget {
+  Widget _listItemBuilder(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {
+        // 单击进入新闻详情页
+        // Navigator.pushNamed(context, '/detail');
+        Navigator.of(context).push(        
+          MaterialPageRoute(builder: (context) => DetailView(title: '新闻详情', news: NewsList[index]))
+        );
+      }, 
+      child: new Card(
+        child: new Material(
+            child: new InkWell(
+              child: new Container(
+                padding: const EdgeInsets.all(5.0),
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                  
+
                   ],
                 ),
               ),

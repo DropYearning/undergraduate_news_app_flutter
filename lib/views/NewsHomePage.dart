@@ -57,7 +57,7 @@ class _NewsHomePageState extends State<NewsHomePage>
       appBar: AppBar(
         title: Text(widget.title),
         // 导航栏右侧菜单键
-        actions: <Widget>[IconButton(icon: Icon(Icons.share))],
+        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
         bottom: TabBar(
             // 设置为被选中标签字体为深黑色
             unselectedLabelColor: Colors.black87,
