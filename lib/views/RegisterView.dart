@@ -7,11 +7,10 @@ class RegisterView extends StatelessWidget {
     this.title,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: Text(this.title),
         centerTitle: true,
         elevation: 0.0,
@@ -22,7 +21,6 @@ class RegisterView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RegisterForm(),
-    
           ],
         ),
       ),
@@ -41,15 +39,17 @@ class _RegisterFormState extends State<RegisterForm> {
   // 设置是否打开自动表单验证的开关
   bool autovalidateSwitch = false;
 
-  void submitRegisterForm () {
+  void submitRegisterForm() {
     if (registerFormKey.currentState.validate()) {
       registerFormKey.currentState.save();
-      debugPrint('username: $username' + '   password: $password' );
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('正在注册...'),
-        )
-      );
+      debugPrint('username: $username' + '   password: $password');
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('正在注册...'),
+        action: SnackBarAction(
+          label: 'ok',
+          onPressed: () {},
+        ),
+      ));
     } else {
       setState(() {
         autovalidateSwitch = true;
@@ -57,16 +57,16 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 
-  String validateUsername(value){
-    if(value.isEmpty) {
+  String validateUsername(value) {
+    if (value.isEmpty) {
       return '用户名不能为空!';
     }
 
     return null;
   }
 
-    String validatePassword(value){
-    if(value.isEmpty) {
+  String validatePassword(value) {
+    if (value.isEmpty) {
       return '密码不能为空!';
     }
     return null;
@@ -79,45 +79,43 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Username',
+            decoration: InputDecoration(
+              labelText: 'Username',
+            ),
+            onSaved: (value) {
+              username = value; //保存表单内容时赋值
+            },
+            validator: validateUsername,
+            autovalidate: autovalidateSwitch,
+          ),
+          TextFormField(
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+            ),
+            onSaved: (value) {
+              password = value; //保存表单内容时赋值
+            },
+            validator: validatePassword,
+            autovalidate: autovalidateSwitch,
+          ),
+          SizedBox(
+            height: 32.0,
+          ),
+          Container(
+            width: double.infinity,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Text(
+                '注册',
+                style: TextStyle(color: Colors.white),
               ),
-              onSaved: (value){ 
-                username = value;//保存表单内容时赋值
-              },
-              validator: validateUsername,
-              autovalidate: autovalidateSwitch,
+              elevation: 0.0,
+              onPressed: submitRegisterForm, // 注意不用括号
             ),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-              ),
-              onSaved: (value){ 
-                password = value;//保存表单内容时赋值
-              },
-                validator: validatePassword,
-                autovalidate: autovalidateSwitch,
-            ),
-            SizedBox(height: 32.0,),
-            Container(
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Theme.of(context).accentColor,
-                  child: Text('注册', style: TextStyle(color: Colors.white),),
-                  elevation: 0.0,
-                  onPressed: submitRegisterForm,// 注意不用括号
-                ),
-            ),
-
+          ),
         ],
       ),
     );
   }
 }
-
-
-
-
-
-

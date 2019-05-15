@@ -4,6 +4,7 @@ import './views/NewsHomePage.dart';
 import './views/DetailView.dart';
 import './views/WebView.dart';
 import './views/RegisterView.dart';
+import './views/TestView.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 void main() => runApp(NewsApp());
@@ -26,6 +27,7 @@ class NewsApp extends StatelessWidget {
       // 定义有名路由
       routes: {
         '/': (context) => NewsHomePage(title: 'NewsHub Demo'),
+        '/test': (context) => TestView(),
         '/detail':(context) => DetailView(title: '新闻详情'),
         '/reg':(context) => RegisterView(title: '注册登录'),
         "/xadmin": (_) => new WebviewScaffold(

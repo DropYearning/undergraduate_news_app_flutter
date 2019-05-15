@@ -127,7 +127,7 @@ class HomePageDrawer extends StatelessWidget {
             onTap: ()=> Navigator.of(context).pushNamed("/reg"),
           ),
           ListTile(
-            leading: Icon(Icons.favorite, size: 25.0,),
+            leading: Icon(Icons.star, size: 25.0,),
             title: Text('我的收藏', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             onTap: ()=> Navigator.pop(context),
           ),
@@ -146,6 +146,11 @@ class HomePageDrawer extends StatelessWidget {
             leading: Icon(Icons.add_to_home_screen, size: 25.0,),
             title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             onTap: ()=> Navigator.of(context).pushNamed("/xadmin"),
+          ),
+            ListTile(
+            leading: Icon(Icons.adb, size: 25.0,),
+            title: Text('测试页面', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+            onTap: ()=> Navigator.of(context).pushNamed("/test"),
           ),
             ListTile(
             leading: Icon(Icons.cancel, size: 25.0,),
