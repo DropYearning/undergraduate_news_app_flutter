@@ -55,34 +55,81 @@ class _NewsHomePageState extends State<NewsHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
-        bottom: TabBar(
-            // 设置为被选中标签字体为深黑色
-            unselectedLabelColor: Colors.black87,
-            controller: _tabController,
-            isScrollable: true,
-            tabs: tabs.map((e) => Tab(text: e)).toList()),
-      ),
-      //TabBarView组件，它可以很轻松的配合TabBar来实现同步切换和滑动状态同步
-      body: TabBarView(
-        controller: _tabController,
-        children: tabs.map((e){
-          return Container(
-            alignment: Alignment.center,
-            child: ListViewDemo(),
-          );
-        }).toList()
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            // 构造可以打开左侧抽屉的菜单按钮(一定要用Builder传递context,否则无法打开)
+            leading: Builder(
+              builder: (context) => IconButton(
+                onPressed: ()=>Scaffold.of(context).openDrawer(),
+                icon: Icon(Icons.menu), 
+              ),
+            ),
+            floating: true,
+            pinned: false,
+            snap:true,
+            expandedHeight: 0.0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text('Newshub Demo', style: TextStyle(
+                letterSpacing: 0.0,
+                fontWeight:FontWeight.w400,
+                ),
+              ),
+              
+            ),
+          ),
+          SliverSafeArea(
+            sliver: SliverPadding(
+              padding: EdgeInsets.all(0.0),
+              sliver: SliverListDemo(),
+            ),
+          ),
+          // TabBar(
+          //     indicatorPadding: EdgeInsets.only(bottom: 0.0),
+          //     // 设置为被选中标签字体为深黑色
+          //     unselectedLabelColor: Colors.black87,
+          //     controller: _tabController,
+          //     isScrollable: true,
+          //     //tabs: tabs.map((e) => Tab(text: e)).toList(),
+          // ),
 
+        ],
       ),
 
+
+
+    //   appBar: AppBar(
+    //     title: Text(widget.title),
+    //     centerTitle: true,
+    //     actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
+    //     bottom: 
+    //       TabBar(
+    //           //indicatorPadding: EdgeInsets.only(bottom: 0.0),
+    //           // 设置为被选中标签字体为深黑色
+    //           unselectedLabelColor: Colors.black87,
+    //           controller: _tabController,
+    //           isScrollable: true,
+    //           tabs: tabs.map((e) => Tab(text: e)).toList()
+    //       ),
+    //  ),
+
+      // //TabBarView组件，它可以很轻松的配合TabBar来实现同步切换和滑动状态同步
+      // body: TabBarView(
+      //   controller: _tabController,
+      //   children: tabs.map((e){
+      //     return Container(
+      //       alignment: Alignment.center,
+      //       child: ListViewDemo(),
+      //     );
+      //   }).toList()
+
+      // ),
 
 
       drawer: HomePageDrawer(),
-      // 底部导航
-      bottomNavigationBar: HomePageNavigationBar(),
+      // // 底部导航
+       bottomNavigationBar: HomePageNavigationBar(),
     );
   }
 }
@@ -183,11 +230,12 @@ class _HomePageNavigationBarState extends State<HomePageNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+        iconSize: 24.0 ,
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: _onTapHandler,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页'),),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), title: Text('推荐')),
           BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('用户')),
         ],

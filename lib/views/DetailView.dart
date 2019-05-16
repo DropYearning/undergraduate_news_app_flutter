@@ -4,6 +4,8 @@ import 'package:flutter_html_textview/flutter_html_textview.dart';
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import '../models/news_entity.dart';
 import './WebView.dart';
+import 'package:share/share.dart';
+  
 
 
 class DetailView extends StatelessWidget {
@@ -22,7 +24,7 @@ class DetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
+        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {  },)],
         elevation: 0.0,
         centerTitle: true,
       ),
