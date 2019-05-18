@@ -55,6 +55,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.done), onPressed: () {  }),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),

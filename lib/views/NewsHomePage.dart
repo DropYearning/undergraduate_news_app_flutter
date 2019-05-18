@@ -65,18 +65,20 @@ class _NewsHomePageState extends State<NewsHomePage>
                 icon: Icon(Icons.menu), 
               ),
             ),
+            title: Text('Newshub Demo'),
+            centerTitle: true,
             floating: true,
-            pinned: false,
+            //pinned: false,
             snap:true,
             expandedHeight: 0.0,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text('Newshub Demo', style: TextStyle(
-                letterSpacing: 0.0,
-                fontWeight:FontWeight.w400,
-                ),
-              ),
-              
+            bottom: TabBar(
+              indicatorPadding: EdgeInsets.only(bottom: 0.0),
+              // 设置为被选中标签字体为深黑色
+              unselectedLabelColor: Colors.black87,
+              controller: _tabController,
+              isScrollable: true,
+              tabs: tabs.map((e) => Tab(text: e)).toList(),
+
             ),
           ),
           SliverSafeArea(
@@ -85,51 +87,23 @@ class _NewsHomePageState extends State<NewsHomePage>
               sliver: SliverListDemo(),
             ),
           ),
-          // TabBar(
-          //     indicatorPadding: EdgeInsets.only(bottom: 0.0),
-          //     // 设置为被选中标签字体为深黑色
-          //     unselectedLabelColor: Colors.black87,
-          //     controller: _tabController,
-          //     isScrollable: true,
-          //     //tabs: tabs.map((e) => Tab(text: e)).toList(),
-          // ),
-
+          
         ],
       ),
+      //添加一个返回最上的按钮
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_upward),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        onPressed: (){},
+        tooltip : '返回最上',
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
-
-
-    //   appBar: AppBar(
-    //     title: Text(widget.title),
-    //     centerTitle: true,
-    //     actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {},)],
-    //     bottom: 
-    //       TabBar(
-    //           //indicatorPadding: EdgeInsets.only(bottom: 0.0),
-    //           // 设置为被选中标签字体为深黑色
-    //           unselectedLabelColor: Colors.black87,
-    //           controller: _tabController,
-    //           isScrollable: true,
-    //           tabs: tabs.map((e) => Tab(text: e)).toList()
-    //       ),
-    //  ),
-
-      // //TabBarView组件，它可以很轻松的配合TabBar来实现同步切换和滑动状态同步
-      // body: TabBarView(
-      //   controller: _tabController,
-      //   children: tabs.map((e){
-      //     return Container(
-      //       alignment: Alignment.center,
-      //       child: ListViewDemo(),
-      //     );
-      //   }).toList()
-
-      // ),
-
-
+      // 左侧抽屉菜单
       drawer: HomePageDrawer(),
       // // 底部导航
-       bottomNavigationBar: HomePageNavigationBar(),
+      bottomNavigationBar: HomePageNavigationBar(),
     );
   }
 }

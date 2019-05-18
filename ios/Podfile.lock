@@ -4,6 +4,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - share (0.5.2):
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
 
@@ -11,6 +13,7 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 EXTERNAL SOURCES:
@@ -20,6 +23,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
 
@@ -27,6 +32,7 @@ SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
