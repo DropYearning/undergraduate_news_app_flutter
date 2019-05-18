@@ -3,8 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert'; //用来处理json
+import '../models/news.dart';
 
-class TestView extends StatelessWidget {
+class TestNewsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,33 +27,29 @@ class _HttpDemoHomeState extends State<HttpDemoHome> {
   @override
     void initState(){
       super.initState();
-      // fetchPosts()
+      fetchNews();
       //   .then((value) => print(value));
-
-
-
     }
-  
- Future<List<Post>> fetchPosts() async{
-    final response = await http.get('https://resources.ninghao.net/demo/posts.json');
 
-    if(response.statusCode == 200){
-      final responseBody = json.decode(response.body);
-      List<Post> posts = responseBody['posts']
-        .map<Post>( (item) => Post.fromJson(item) )
-        .toList();
-    return posts;
+  fetchNews() async{
+    final rsp = await Dio().get('http://111.231.57.151:8000/newlist/domestic/?page=1');
+    // 如果请求成功
+    if(rsp.statusCode == 200){
+      List<News> newslist = rsp.data['results']
+          .map<News>( (item) => News.fromJson(item) )
+          .toList();
+      return newslist;
     }else{
       throw Exception('Falied');
     }
-  
-
   }
+
+
   
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future:fetchPosts(),
+      future:fetchNews(),
       builder: (BuildContext context, AsyncSnapshot snapshot){
 
         if (snapshot.connectionState == ConnectionState.waiting){
@@ -60,14 +57,13 @@ class _HttpDemoHomeState extends State<HttpDemoHome> {
             child: Text('load...') ,
             );
         }
-
         return ListView(
           children: snapshot.data.map<Widget>((item){
             return ListTile(
               title: Text(item.title),
-              subtitle:Text(item.author) ,
+              subtitle:Text(item.source) ,
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(item.imageUrl),
+                backgroundImage: NetworkImage(item.picurl1),
               ),
             );
           }).toList(),
@@ -76,36 +72,3 @@ class _HttpDemoHomeState extends State<HttpDemoHome> {
     );
   }
 }
-
-class Post{
-  final int id;
-  final String title;
-  final String description;
-  final String author;
-  final String imageUrl;
-
-  Post(
-    this.id,
-    this.title,
-    this.description,
-    this.author,
-    this.imageUrl,
-  );
-
-  // 另一种构造方法
-  Post.fromJson(Map json)
-    : title = json['title'],
-      description = json['description'],
-      id = json['id'],
-      author = json['author'],
-      imageUrl = json['imageUrl'];
-  
-  Map toJson() =>{
-    'title' :title,
-    'description' : description,
-
-  };
-}
-
-
-

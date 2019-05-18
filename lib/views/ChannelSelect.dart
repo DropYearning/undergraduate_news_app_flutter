@@ -56,7 +56,11 @@ class _ChannelSelectState extends State<ChannelSelect> {
         title: Text(widget.title),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.done), onPressed: () {  }),
+          // 确认提交按钮
+          IconButton(icon: Icon(Icons.done), onPressed: () {
+              
+            }
+          ),
         ],
       ),
       body: Container(

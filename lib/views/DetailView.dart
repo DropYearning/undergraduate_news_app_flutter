@@ -4,7 +4,6 @@ import 'package:flutter_html_textview/flutter_html_textview.dart';
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import '../models/news_entity.dart';
 import './WebView.dart';
-import 'package:share/share.dart';
   
 
 
