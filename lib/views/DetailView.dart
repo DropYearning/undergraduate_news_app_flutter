@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-// flutter_html_textview包解析html标签转换成flutter控件展示
 import 'package:flutter_html_textview/flutter_html_textview.dart';
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import '../models/news_entity.dart';
+import '../models/news_detail.dart';
 import './WebView.dart';
-  
+import 'package:dio/dio.dart';
 
+  
 
 class DetailView extends StatelessWidget {
 
-  
-  final String title; //appbar标题
   final NewsEntity news; //新闻数据对象
 
   DetailView({
-    this.title,
     this.news,
   });
 
@@ -22,7 +20,7 @@ class DetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text('新闻详情'),
         actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {  },)],
         elevation: 0.0,
         centerTitle: true,
@@ -86,3 +84,5 @@ class DetailView extends StatelessWidget {
     );
   }
 }
+
+

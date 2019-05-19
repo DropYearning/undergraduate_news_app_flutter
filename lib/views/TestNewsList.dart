@@ -1,3 +1,7 @@
+// 这是一个测试页面
+// 通过DIO来请求国内频道的最新10条新闻列表做简单显示
+
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;

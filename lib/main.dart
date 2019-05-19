@@ -8,6 +8,7 @@ import './views/TestView.dart';
 import './views/TestNewsList.dart';
 import './views/ChannelSelect.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import './rebuild//Views/HomePage.dart';
 
 void main() => runApp(NewsApp());
 
@@ -22,22 +23,13 @@ class NewsApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // 应用启动首页路由
-      //home: NewsHomePage(title: 'NewsHub Demo'),
       // 定义根路由
       initialRoute: '/',
       // 定义有名路由
       routes: {
-        '/': (context) => NewsHomePage(title: 'NewsHub Demo'),
-        '/test': (context) => TestNewsListView(),
-        '/detail':(context) => DetailView(title: '新闻详情'),
-        '/reg':(context) => RegisterView(title: '注册登录'),
-        "/xadmin": (_) => new WebviewScaffold(
-              url:"http://111.231.57.151:8000/xadmin/",
-              appBar: new AppBar(
-                title: new Text("新闻数据后台管理系统"),
-              ),
-            ),
+        '/': (context) => HomePage(), //跟路由,导向启动页面
+
+
       },
     );
   }
