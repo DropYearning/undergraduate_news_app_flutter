@@ -26,6 +26,7 @@ dependencies:
   flutter_webview_plugin: ^0.3.5 # 在新闻详情页实现源链接的访问
   flutter_html_textview: ^0.2.6 # 在新闻详情页解析HTML
   dio: ^2.1.3
+  flutter_easyrefresh: ^1.2.7
     
 dev_dependencies:
   flutter_test:

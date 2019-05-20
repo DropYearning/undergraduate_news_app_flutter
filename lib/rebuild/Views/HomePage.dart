@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../Widget/ChannelNewsList.dart';
 import '../Widget/ButtomNavigation.dart';
+import '../Widget/HomePageDrawer.dart';
+import '../Widget/EasyRefresh.dart';
+import '../Widget/RefreshNewsList.dart';
 
 
 // app首页类
@@ -12,6 +15,7 @@ class HomePage extends StatefulWidget {
 // app首页类对应的State类
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   // SingleTickerProviderStateMixin用来给Tab增加切换动画效果
+
 
   // tab的名字
   final List<Tab> _channelTabs = <Tab>[
@@ -65,29 +69,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
             ),
       ),
-      body: Container(
-        child: TabBarView(
-          controller: _tabController,
-          
+      drawer: HomePageDrawer(),
+      body: TabBarView(
+          controller: _tabController, 
           children: <Widget>[
             // 对应14个频道的TabBarView中显示的内容
-            ChannelNewsList(channelName: 'domestic',),
-            ChannelNewsList(channelName: 'international',),
-            ChannelNewsList(channelName: 'finance',),
-            ChannelNewsList(channelName: 'entertainment',),
-            ChannelNewsList(channelName: 'car',),
-            ChannelNewsList(channelName: 'military',),
-            ChannelNewsList(channelName: 'society',),
-            ChannelNewsList(channelName: 'sport',),
-            ChannelNewsList(channelName: 'edu',),
-            ChannelNewsList(channelName: 'digit',),
-            ChannelNewsList(channelName: 'game',),
-            ChannelNewsList(channelName: 'tech',),
-            ChannelNewsList(channelName: 'internet',),
-            ChannelNewsList(channelName: 'estate',),      
+            RefreshNewsList(channelName: 'domestic',),
+            RefreshNewsList(channelName: 'international'),
+            RefreshNewsList(channelName: 'finance',),
+            RefreshNewsList(channelName: 'entertainment',),
+            RefreshNewsList(channelName: 'car',),
+            RefreshNewsList(channelName: 'military',),
+            RefreshNewsList(channelName: 'society',),
+            RefreshNewsList(channelName: 'sport',),
+            RefreshNewsList(channelName: 'edu',),
+            RefreshNewsList(channelName: 'digit',),
+            RefreshNewsList(channelName: 'game',),
+            RefreshNewsList(channelName: 'tech',),
+            RefreshNewsList(channelName: 'internet',),
+            RefreshNewsList(channelName: 'estate',),      
           ],
         ),
-      ),
     bottomNavigationBar: MyBottomNavigationBar(),
     );
   }

@@ -51,7 +51,7 @@ class _ChannelNewsListState extends State<ChannelNewsList> with AutomaticKeepAli
       List<News> newslist = rsp.data['results']
           .map<News>( (item) => News.fromJson(item) )
           .toList();
-      print(rsp.data);
+      //print(rsp.data);
       return newslist;
     }else{
       throw Exception('Falied');

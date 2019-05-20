@@ -1,14 +1,8 @@
 // main.dart只作为App入口函数
 import 'package:flutter/material.dart';
-import './views/NewsHomePage.dart';
-import './views/DetailView.dart';
-import './views/WebView.dart';
-import './views/RegisterView.dart';
-import './views/TestView.dart';
-import './views/TestNewsList.dart';
-import './views/ChannelSelect.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import './rebuild//Views/HomePage.dart';
+
+
 
 void main() => runApp(NewsApp());
 
@@ -27,9 +21,8 @@ class NewsApp extends StatelessWidget {
       initialRoute: '/',
       // 定义有名路由
       routes: {
-        '/': (context) => HomePage(), //跟路由,导向启动页面
-
-
+        '/': (context) => HomePage(), 
+        
       },
     );
   }
