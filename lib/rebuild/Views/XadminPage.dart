@@ -9,7 +9,7 @@ class XadminPage extends StatelessWidget {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   @override
   Widget build(BuildContext context) {
-    Widget WebScreen = new WebviewScaffold(
+    Widget webScreen = new WebviewScaffold(
             url: "http://111.231.57.151:8000/xadmin/",
             // 自添加带返回操作的appbar
             withZoom: true,
@@ -29,6 +29,6 @@ class XadminPage extends StatelessWidget {
               ),
             )
           );
-    return WebScreen;
+    return webScreen;
   }
 }

@@ -32,7 +32,7 @@ class NewsEntity{
   final String picurl3;
 }
 
-final List<NewsEntity> NewsList = [
+final List<NewsEntity> newsList = [
   NewsEntity(
     id: "00b4f780c5a803286a2ce735ff454ffa" ,
     title: "1瓜子二手车严选直卖店宣布落地深圳 华南区业绩位居全国第一",

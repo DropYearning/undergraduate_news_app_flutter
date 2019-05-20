@@ -4,11 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import '../Models/News.dart';
+import './NewsRow.dart';
 
 // 可上拉更新和下拉加载的新闻列表,使用了easy_refresh插件
 class RefreshNewsList extends StatefulWidget {
 
-  String channelName;
+  final String channelName;
   //StatelessWidget更复杂, 一旦其中含有参数必须声明key
   RefreshNewsList({Key key, @required this.channelName}) : super(key: key);
   @override
@@ -50,17 +51,23 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
       List<News> _newslist = rsp.data['results']
           .map<News>( (item) => News.fromJson(item) )
           .toList();
+
       // 设置State类内的参数必须使用setState
       for(int i=0;i<_newslist.length;i++)
       {
-        setState(() {
+        // 在setState前判断一下是否在Widget树中,防止setState() called after dispose()错误
+        if (mounted) {
+          //这一句报过错
+          setState(() {
           idSet.add(_newslist[i].id);
-        });  
+          }); 
+        }
       }
-
-      setState(() {
-        newsList = _newslist;
-      });
+      if (mounted) {
+        setState(() {
+          newsList = _newslist;
+        });
+      } 
       print("fetchNewsList当前Set中新闻个数为"+idSet.length.toString());
       printList(newsList);
 
@@ -147,6 +154,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
           child: new EasyRefresh(
             key: _easyRefreshKey,
             autoLoad: false,
+            //firstRefresh: true,
             behavior: ScrollOverBehavior(),
             // 下拉样式设置
             refreshHeader: ClassicsHeader(
@@ -155,7 +163,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               refreshReadyText: "释放",
               refreshingText: "正在加载...",
               refreshedText:"加载成功",
-              moreInfo: "updateAt",
+              //moreInfo: "updateAt",
               bgColor: Colors.transparent,
               textColor: Colors.black87,
               moreInfoColor: Colors.black54,
@@ -169,7 +177,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               loadingText:"正在加载...",
               loadedText: "加载成功",
               noMoreText: "noMore",
-              moreInfo: "updateAt",
+              //moreInfo: "updateAt",
               bgColor: Colors.transparent,
               textColor: Colors.black87,
               moreInfoColor: Colors.black54,
@@ -179,14 +187,11 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               //ListView的Item
                 itemCount: newsList.length,
                 itemBuilder: (BuildContext context,int index){
-                  return new Container(
-                      height: 70.0,
-                      child: Card(
-                        child: new Center(
-                          child: new Text(newsList[index].title,style: new TextStyle(fontSize: 18.0),),
-                        ),
-                      )
-                  );
+                  if(newsList[index].havepic == 0)
+                    return NewsRowWithoutPic(newsItem:newsList[index]);
+                  else{
+                    return NewsRowWithPic(newsItem:newsList[index]);
+                  }
                 }
             ),
 
@@ -233,7 +238,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               setState(() {
                 morePageIndex = morePageIndex+1;
               });
-              fetchMoreList();
+              await fetchMoreList();
               print("当前下拉到的页数为:"+morePageIndex.toString());
               printList(moreList);
               await new Future.delayed(const Duration(seconds: 1), () {
@@ -247,12 +252,6 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
     );
   }
 }
-
-
-
-
-
-
 
 
 // 各个频道的API URL

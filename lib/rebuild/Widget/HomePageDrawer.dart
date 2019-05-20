@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Views/XadminPage.dart';
 import '../Views/LoginPage.dart';
-import '../Widget/EasyRefresh.dart';
 
 
 // 首页左侧抽屉菜单部件
@@ -70,7 +69,7 @@ class HomePageDrawer extends StatelessWidget {
             leading: Icon(Icons.adb, size: 25.0,),
             title: Text('测试页面', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestPage()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage()));
             },
           ),
             ListTile(

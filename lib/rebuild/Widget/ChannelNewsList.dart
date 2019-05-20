@@ -25,7 +25,7 @@ Map<String, String> channelNameToUrl = {
 // 新闻频道的列表样式
 class ChannelNewsList extends StatefulWidget {
 
-  String channelName;
+  final String channelName;
   //StatelessWidget更复杂, 一旦其中含有参数必须声明key
   ChannelNewsList({Key key, @required this.channelName}) : super(key: key);
   @override
