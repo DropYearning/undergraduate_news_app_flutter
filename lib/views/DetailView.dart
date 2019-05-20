@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html_textview/flutter_html_textview.dart';
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import '../models/news_entity.dart';
-import '../models/news_detail.dart';
+import '../models/newsDetail.dart';
 import './WebView.dart';
 import 'package:dio/dio.dart';
 

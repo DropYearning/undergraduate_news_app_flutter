@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import '../Models/News.dart';
 
@@ -191,26 +192,42 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
 
             // 设置下拉事件
             onRefresh: () async{
+              // 一定要使用await先执行更新,否则会出现异步错误
+              await fetchUpdateList();    
               print("[onRefresh函数]:输出下拉之前的newsList");
-              printList(newsList);            
-              fetchUpdateList();           
-              print("[onRefresh函数]:输出更新之后的newsList");
+              printList(newsList);                 
+              print("[onRefresh函数]:输出更新之后的newsListNew");
               printList(newsListNew);
+              int updateCount = updateList.length;
               await new Future.delayed(const Duration(seconds: 1), () {
-                if(updateList.length !=0 ){
-                  //如果有更新
+                if(updateCount !=0 ){
+                  //如果有更新   
                   setState(() {
                     newsList.clear();
                     newsList.addAll(newsListNew);
                   });
                 }else{
                   //如果没有更新
-                }
-
-                
+                }            
               });
+              String toastMsg = "";
+              if (updateCount != 0) {
+                toastMsg = "已为您更新$updateCount条新闻";
+              } else {
+                toastMsg = "暂无更新";
+              }
+              // 弹出toast
+              Fluttertoast.showToast(
+                msg: toastMsg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.white,
+                textColor: Colors.black87,
+                fontSize: 16.0
+              );
+            
             },
-
             // 设置上拉事件
             loadMore: () async {
               setState(() {

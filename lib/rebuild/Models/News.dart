@@ -59,9 +59,6 @@ class News{
     'keywords' : keywords,
   };
 
-
-
-
 }
 
 
