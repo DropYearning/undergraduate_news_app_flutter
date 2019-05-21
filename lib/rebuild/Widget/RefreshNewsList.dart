@@ -258,7 +258,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
 Map<String, String> channelNameToUrl = {
   'domestic':'http://111.231.57.151:8000/newlist/domestic/?page=',
   'international':'http://111.231.57.151:8000/newlist/international/?page=',
-  'finance':'http://111.231.57.151:8000/newlist/finance/?page=1',
+  'finance':'http://111.231.57.151:8000/newlist/finance/?page=',
   'entertainment':'http://111.231.57.151:8000/newlist/entertainment/?page=',
   'car':'http://111.231.57.151:8000/newlist/car/?page=',
   'military':'http://111.231.57.151:8000/newlist/military/?page=',

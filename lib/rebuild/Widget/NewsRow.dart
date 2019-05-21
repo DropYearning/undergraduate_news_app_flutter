@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Models/News.dart';
+import '../Views/NewsDetailPage.dart';
 
 
 // 没有张图片的新闻列表项
@@ -38,7 +39,7 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
     return GestureDetector(
         onTap: () {
           // 点击进入新闻详情页
-
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem:widget.newsItem)));
         },//onTap
         child: new Card(
           child: new Material(
@@ -150,6 +151,7 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
     return GestureDetector(
         onTap: () {
           // 单击进入新闻详情页
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem:widget.newsItem)));
         },//onTap
         child: new Card(
           child: new Material(
@@ -175,7 +177,7 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                         children: <Widget>[
                           new Expanded(
                               child: new Container(
-                                  padding: const EdgeInsets.all(0.0),
+                                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                                   child: AspectRatio(
                                     aspectRatio: 16 / 9,
                                     child: Image.network(
