@@ -77,6 +77,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // 下面的这个if/else判断十分重要, 因为DIO请求newsItemWithHTML是异步进行的,Setstate方法会使组件被重绘
+    // 因此在绘制buildDetailBody组件之前,必须保证newsItemWithHTML中已经得到了要请求的数据,否则会出现called on null
+    // 错误
     if (newsItemWithHTML.title == null) {
       return Scaffold(
         appBar: AppBar(
@@ -111,29 +114,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     );
   }
 
-
-
-    //  return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('新闻详情'),
-    //     // TODO: 完成分享新闻详情按钮
-    //     actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {  },)],
-    //     elevation: 0.0,
-    //     centerTitle: true,
-    //   ),
-    //   body:buildDetailBody(newsItemWithHTML),
-    //   //添加浮动按钮
-    //   floatingActionButton: FloatingActionButton(
-    //     child: Icon(Icons.open_in_new),
-    //     onPressed: (){
-    //       Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebNewsVisit(link:widget.newsItem.link)));
-    //     },
-    //   ),
-    //   floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-    // );
-
-
-  }
+}
 }
 
 
