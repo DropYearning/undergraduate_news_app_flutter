@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   // tab的名字
   final List<Tab> _channelTabs = <Tab>[
+    Tab(text:'推荐'),
     Tab(text:'国内'),
     Tab(text:'国际'),
     Tab(text:'财经'),
@@ -72,6 +73,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           controller: _tabController, 
           children: <Widget>[
             // 对应14个频道的TabBarView中显示的内容
+            RefreshNewsList(channelName: 'domestic',),
             RefreshNewsList(channelName: 'domestic',),
             RefreshNewsList(channelName: 'international'),
             RefreshNewsList(channelName: 'finance',),

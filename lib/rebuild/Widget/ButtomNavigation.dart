@@ -35,7 +35,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         onTap: _onTapHandler,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页'),),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), title: Text('推荐')),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), title: Text('收藏')),
           BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('用户')),
         ],
       );

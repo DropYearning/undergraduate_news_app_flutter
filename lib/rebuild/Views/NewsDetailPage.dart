@@ -90,7 +90,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
         centerTitle: true,
         ),
         body: Center(
-            child: Text('load...') ,
+            child: Text('loading...') ,
             ),
       );
     } else {

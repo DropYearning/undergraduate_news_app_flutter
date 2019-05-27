@@ -111,6 +111,18 @@ class _RegisterFormState extends State<RegisterForm> {
               onPressed: submitRegisterForm, // 注意不用括号
             ),
           ),
+          Container(
+            width: double.infinity,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              child: Text(
+                '登录',
+                style: TextStyle(color: Colors.white),
+              ),
+              elevation: 0.0,
+              onPressed: submitRegisterForm, // 注意不用括号
+            ),
+          ),
         ],
       ),
     );
