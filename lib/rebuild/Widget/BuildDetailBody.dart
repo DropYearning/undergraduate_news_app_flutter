@@ -1,3 +1,5 @@
+// 新闻详情页body组件
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview/flutter_html_textview.dart';
 import '../Models/NewsDetail.dart';

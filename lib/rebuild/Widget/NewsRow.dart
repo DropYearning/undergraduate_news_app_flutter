@@ -1,3 +1,5 @@
+// NewsRow.dart 新闻列表中的行组件,显示一条新闻
+
 import 'package:flutter/material.dart';
 import '../Models/News.dart';
 import '../Views/NewsDetailPage.dart';

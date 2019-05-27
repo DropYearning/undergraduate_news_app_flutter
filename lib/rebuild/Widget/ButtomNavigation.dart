@@ -1,7 +1,8 @@
+// 首页底部导航栏
 import 'package:flutter/material.dart';
 import '../Views/LoginPage.dart';
 
-// 底部导航栏
+
 class MyBottomNavigationBar extends StatefulWidget {
 
   @override

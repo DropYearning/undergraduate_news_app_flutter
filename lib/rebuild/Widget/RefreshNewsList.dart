@@ -1,3 +1,5 @@
+// RefreshNewsList 可上拉更新和下拉加载的新闻列表,使用了easy_refresh插件
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:dio/dio.dart';
@@ -6,7 +8,8 @@ import 'dart:async';
 import '../Models/News.dart';
 import './NewsRow.dart';
 
-// 可上拉更新和下拉加载的新闻列表,使用了easy_refresh插件
+
+
 class RefreshNewsList extends StatefulWidget {
 
   final String channelName;
@@ -43,6 +46,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
       fetchNewsList();
   }
 
+  // 启动时加载新闻列表
   fetchNewsList() async{
     String newsUrl = channelNameToUrl[widget.channelName]+"1";
     final rsp = await Dio().get(newsUrl);
@@ -64,18 +68,19 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
         }
       }
       if (mounted) {
-        setState(() {
-          newsList = _newslist;
-        });
+          setState(() {
+            newsList = _newslist;
+          });
       } 
-      print("fetchNewsList当前Set中新闻个数为"+idSet.length.toString());
-      printList(newsList);
-
+    // // 调试输出
+    // print("fetchNewsList当前Set中新闻个数为"+idSet.length.toString());
+    // printList(newsList);
     }else{
       throw Exception('Falied');
     }
   }
 
+  // 上拉加载更多
   fetchMoreList() async{
     String newsUrl = channelNameToUrl[widget.channelName]
     + morePageIndex.toString();
@@ -90,12 +95,12 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
         moreList.clear();
         moreList = _newslist;
       });
-
     }else{
       throw Exception('Falied');
     }
   }
 
+  // 下拉更新
   fetchUpdateList() async{
     String newsUrl = channelNameToUrl[widget.channelName]
     +"1";
@@ -126,18 +131,18 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
             });
           }
       }
-      print("[fetchUpdateList]函数:当前Set中新闻个数为"+idSet.length.toString());
-      print("[fetchUpdateList]函数:本次updateList为:");
-      printList(updateList);
-    
-    
-    }else{ //if(rsp.statusCode == 200)
+      // // 调试输出
+      // print("[fetchUpdateList]函数:当前Set中新闻个数为"+idSet.length.toString());
+      // print("[fetchUpdateList]函数:本次updateList为:");
+      // printList(updateList);  
+    }else{
       throw Exception('Falied');
     }
   }
 
 
 
+  // 打印输出List,调试用
   printList(List<News> l){
     String s = "";
     for(int i=0;i<l.length;i++)
@@ -148,9 +153,11 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
   }
 
 
+  // 返回构建
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    if(newsList.length != 0) {
+        return  Center(
           child: new EasyRefresh(
             key: _easyRefreshKey,
             autoLoad: false,
@@ -187,6 +194,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               //ListView的Item
                 itemCount: newsList.length,
                 itemBuilder: (BuildContext context,int index){
+                  // 根据图片数判断生成哪种新闻行组件
                   if(newsList[index].havepic == 0)
                     return NewsRowWithoutPic(newsItem:newsList[index]);
                   else{
@@ -198,22 +206,22 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
             // 设置下拉事件
             onRefresh: () async{
               // 一定要使用await先执行更新,否则会出现异步错误
-              await fetchUpdateList();    
+              await fetchUpdateList();
               print("[onRefresh函数]:输出下拉之前的newsList");
-              printList(newsList);                 
+              printList(newsList);
               print("[onRefresh函数]:输出更新之后的newsListNew");
               printList(newsListNew);
               int updateCount = updateList.length;
               await new Future.delayed(const Duration(seconds: 1), () {
                 if(updateCount !=0 ){
-                  //如果有更新   
+                  //如果有更新
                   setState(() {
                     newsList.clear();
                     newsList.addAll(newsListNew);
                   });
                 }else{
                   //如果没有更新
-                }            
+                }
               });
               String toastMsg = "";
               if (updateCount != 0) {
@@ -223,15 +231,14 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               }
               // 弹出toast
               Fluttertoast.showToast(
-                msg: toastMsg,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.white,
-                textColor: Colors.black87,
-                fontSize: 16.0
+                  msg: toastMsg,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.black54,
+                  textColor: Colors.white,
+                  fontSize: 16.0
               );
-            
             },
             // 设置上拉事件
             loadMore: () async {
@@ -242,14 +249,16 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
               print("当前下拉到的页数为:"+morePageIndex.toString());
               printList(moreList);
               await new Future.delayed(const Duration(seconds: 1), () {
-                  setState(() {
-                    newsList.addAll(moreList);
-                  });
+                setState(() {
+                  newsList.addAll(moreList);
+                });
               });
             },
           ),
-          
-    );
+        );
+    }else{
+      return Center(child: Text('loading...'),);
+    }
   }
 }
 

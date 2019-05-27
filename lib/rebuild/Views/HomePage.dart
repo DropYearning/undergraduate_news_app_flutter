@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Widget/ButtomNavigation.dart';
-import '../Widget/HomePageDrawer.dart';
+import '../Widget/Drawer.dart';
 import '../Widget/RefreshNewsList.dart';
 
 
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
             ),
       ),
-      drawer: HomePageDrawer(),
+      drawer: MyDrawer(),
       body: TabBarView(
           controller: _tabController, 
           children: <Widget>[
