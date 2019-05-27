@@ -90,9 +90,9 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                               child: Row(
                                 children: <Widget>[
                                   new PopupMenuButton(
-                                    //
+                                    //菜单选项点击事件
                                     onSelected: (value) {
-                                      print(value);
+                                      print("点击了$value选项");
                                     },
                                     icon: Icon(
                                       Icons.more_horiz,
@@ -100,13 +100,13 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                                     ),
                                     itemBuilder: (BuildContext context) => [
                                           PopupMenuItem(
-                                            value: 'shoucang',
+                                            value: '收藏',
                                             child: Text(
                                               '添加到我的收藏',
                                             ),
                                           ),
                                           PopupMenuItem(
-                                            value: 'tuijian',
+                                            value: '推荐',
                                             child: Text(
                                               '推荐更多相似新闻',
                                             ),

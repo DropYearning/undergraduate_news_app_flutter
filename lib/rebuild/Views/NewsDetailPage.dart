@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'dart:async';
 import '../Models/NewsDetail.dart';
 import '../Models/News.dart';
-import '../Widget/BuildDetailBody.dart';
+import '../Widget/DetailBody.dart';
 import '../Views/WebNewsPage.dart';
 
 // 各个频道对应的英文

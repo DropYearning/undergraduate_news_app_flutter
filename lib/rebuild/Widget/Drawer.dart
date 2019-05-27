@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import '../Views/XadminPage.dart';
 import '../Views/LoginPage.dart';
+import '../Views/HistoryPage.dart';
+import '../Views/SavePage.dart';
+import '../Views/SettingPage.dart';
 import '../Util/DataUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
@@ -20,7 +23,7 @@ class _MyDrawerState extends State<MyDrawer> {
   String _username;
 
 
-  setDrawerSatus()async{
+  setDrawerStatus()async{
     String __username = await DataUtils.getUsername();
     bool __isLogin = await DataUtils.getIslogin();
     setState(() {
@@ -32,7 +35,7 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   void initState(){
       super.initState();
-      setDrawerSatus();
+      setDrawerStatus();
   }
 
   @override
@@ -72,13 +75,15 @@ class _MyDrawerState extends State<MyDrawer> {
             ListTile(
               leading: Icon(Icons.settings, size: 25.0,),
               title: Text('软件设置', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-              onTap: ()=> Navigator.pop(context),
+              //onTap: ()=> Navigator.pop(context),SettingPage
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage()));
+              },
             ),
             Divider(),
               ListTile(
               leading: Icon(Icons.add_to_home_screen, size: 25.0,),
               title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-              // onTap: ()=> Navigator.of(context).pushNamed("/xadmin"),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage()));
               },
@@ -128,17 +133,23 @@ class _MyDrawerState extends State<MyDrawer> {
           ListTile(
             leading: Icon(Icons.star, size: 25.0,),
             title: Text('我的收藏', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=> Navigator.pop(context),
+            onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SavaPage()));
+            },    
           ),
           ListTile(
             leading: Icon(Icons.history, size: 25.0,),
             title: Text('浏览历史', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=> Navigator.pop(context),
+            onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HistoryPage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings, size: 25.0,),
             title: Text('软件设置', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-            onTap: ()=> Navigator.pop(context),
+            onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage()));
+            },
           ),
           Divider(),
             ListTile(
