@@ -1,4 +1,14 @@
+// 设置页
 import 'package:flutter/material.dart';
+import '../Views/XadminPage.dart';
+import '../Views/LoginPage.dart';
+import '../Views/HistoryPage.dart';
+import '../Views/SavePage.dart';
+import '../Views/SettingPage.dart';
+import '../Util/DataUtils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:async';
+import '../Widget/SettingBody.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -6,15 +16,49 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+
+  bool _isLogin;
+  String _username;
+
+  setStatus()async{
+    String __username = await DataUtils.getUsername();
+    bool __isLogin = await DataUtils.getIslogin();
+    setState(() {
+      _isLogin = __isLogin;
+      _username = __username;
+    });
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    setStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    // 如果当前没有用户登录
+    if(_isLogin==null || _isLogin==false){
+      return Scaffold(
+        appBar: AppBar(
         title: Text('软件设置'),
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Container(),
+      body: SettingPageBodyUnloged(),
     );
+    // 假如有用户登录
+    }else{
+      return Scaffold(
+        appBar: AppBar(
+        title: Text('软件设置'),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: SettingPageBodyLoged(username: _username,),
+    );
+    }
   }
 }
+
+

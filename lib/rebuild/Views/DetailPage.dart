@@ -59,12 +59,15 @@ class _DetailPageState extends State<DetailPage> {
 
   addHistory()async{
     String username = await DataUtils.getUsername();
+    bool isLogin = await DataUtils.getIslogin();
     // 仅当有用户登录时添加记录
-    if(username !="")
+    if(username !="" && isLogin==true)
     {
       String _url = historyUrl + username + "/" + channelNameToEng [widget.news_channel] + "/" + widget.news_id;
       debugPrint('添加访问记录: $_url');
       await Dio().post(_url);
+    }else{
+      
     }
   }
 

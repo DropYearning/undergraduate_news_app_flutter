@@ -159,7 +159,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
         return  Center(
           child: new EasyRefresh(
             key: _easyRefreshKey,
-            autoLoad: false,
+            autoLoad: true,
             //firstRefresh: true,
             behavior: ScrollOverBehavior(),
             // 下拉样式设置

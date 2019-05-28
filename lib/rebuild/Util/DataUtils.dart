@@ -1,5 +1,7 @@
+// 使用shared_preferences持久化存储数据的工具类
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
+
 
 class DataUtils{
   // 设置shared_preferences中存储两个数据所用的"key",类似于变量名故使用String
