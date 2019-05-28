@@ -61,7 +61,6 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
       {
         // 在setState前判断一下是否在Widget树中,防止setState() called after dispose()错误
         if (mounted) {
-          //这一句报过错
           setState(() {
           idSet.add(_newslist[i].id);
           }); 

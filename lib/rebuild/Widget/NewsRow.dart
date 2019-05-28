@@ -1,11 +1,12 @@
 // NewsRow.dart 新闻列表中的行组件,显示一条新闻
 import 'package:flutter/material.dart';
 import '../Models/News.dart';
-import '../Views/NewsDetailPage.dart';
+import '../Views/DetailPage.dart';
 import '../Util/DataUtils.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../Widget/MyToast.dart';
 
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
@@ -128,25 +129,9 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                                         String _username =await DataUtils.getUsername();
                                         if(_username != ""){
                                           await addSave(_username);
-                                          Fluttertoast.showToast(
-                                            msg: "收藏成功",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIos: 1,
-                                            backgroundColor: Colors.black54,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                          );
+                                            showToast("收藏成功");
                                         }else{
-                                          Fluttertoast.showToast(
-                                            msg: "请先登录",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIos: 1,
-                                            backgroundColor: Colors.black54,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                          );
+                                            showToast("请先登录");
                                         }
                                       }else if(value == '2'){
                                         print(value);
@@ -292,25 +277,9 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                                         String _username =await DataUtils.getUsername();
                                         if(_username != ""){
                                           await addSave(_username);
-                                          Fluttertoast.showToast(
-                                            msg: "收藏成功",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIos: 1,
-                                            backgroundColor: Colors.black54,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                          );
+                                          showToast("收藏成功");
                                         }else{
-                                          Fluttertoast.showToast(
-                                            msg: "请先登录",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIos: 1,
-                                            backgroundColor: Colors.black54,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                          );
+                                          showToast("请先登录");
                                         }
                                       }else if(value == '2'){
                                         print(value);

@@ -5,6 +5,7 @@ import '../Models/NewsDetail.dart';
 import '../Widget/DetailBody.dart';
 import '../Views/WebNewsPage.dart';
 import '../Util/DataUtils.dart';
+import '../Widget/MyToast.dart';
 
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
@@ -17,7 +18,7 @@ Map<String, String> channelNameToEng = {
   '社会': 'society',
   '体育': 'sport',
   '教育': 'edu',
-  '数字': 'digit',
+  '数码': 'digit',
   '游戏': 'game',
   '科技': 'tech',
   '互联网': 'internet',
@@ -37,6 +38,17 @@ class _DetailPageState extends State<DetailPage> {
   final baseUrl = "http://111.231.57.151:8000/detail/";
   final historyUrl = "http://111.231.57.151:8000/history/";
   NewsDetail newsItemWithHTML = new NewsDetail();
+  bool isSaved = false;
+
+  // 用于改变图标
+  Icon _changeIcon(){
+    if(isSaved == false ){
+      return Icon(Icons.turned_in_not);
+    }else{
+      return Icon(Icons.turned_in);
+    }
+  }
+
 
   @override
   void initState() {
@@ -50,9 +62,25 @@ class _DetailPageState extends State<DetailPage> {
     // 仅当有用户登录时添加记录
     if(username !="")
     {
-      String _url = historyUrl + username + "/" + channelNameToEng    [widget.news_channel] + "/" +widget.news_id;
+      String _url = historyUrl + username + "/" + channelNameToEng [widget.news_channel] + "/" + widget.news_id;
       debugPrint('添加访问记录: $_url');
       await Dio().post(_url);
+    }
+  }
+
+  addSave() async{
+     String username = await DataUtils.getUsername();
+    // 仅当有用户登录时添加记录
+    if(username ==""){
+      showToast("请先登录");
+    }else{
+        String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[newsItemWithHTML.channelname] + "/" +newsItemWithHTML.id;
+        debugPrint('添加收藏记录: $_url');
+        await Dio().post(_url);
+        setState(() {
+          isSaved = true;
+        });
+        showToast("收藏成功");
     }
   }
 
@@ -97,8 +125,9 @@ class _DetailPageState extends State<DetailPage> {
       return Scaffold(
         appBar: AppBar(
         title: Text('新闻详情'),
-        // TODO: 完成分享新闻详情按钮
-        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {  },)],
+        actions: <Widget>[IconButton(icon: _changeIcon(), onPressed: () async{  
+          await addSave();
+        },)],
         elevation: 0.0,
         centerTitle: true,
         ),
@@ -111,7 +140,9 @@ class _DetailPageState extends State<DetailPage> {
       appBar: AppBar(
         title: Text('新闻详情'),
         // TODO: 完成分享新闻详情按钮
-        actions: <Widget>[IconButton(icon: Icon(Icons.share), onPressed: () {  },)],
+        actions: <Widget>[IconButton(icon: _changeIcon(), onPressed: () async{ 
+            await addSave();
+        },)],
         elevation: 0.0,
         centerTitle: true,
       ),

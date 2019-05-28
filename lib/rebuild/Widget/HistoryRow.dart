@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../Models/HistoryItem.dart';
-import '../Views/NewsDetailPage.dart';
+import '../Views/DetailPage.dart';
 
 class HistoryRow extends StatefulWidget {
   final HistoryItem historyItem;

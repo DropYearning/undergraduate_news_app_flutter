@@ -20,7 +20,7 @@ class _HistoryBodyState extends State<HistoryBody> {
   fetchHistoryList() async {
     String __username = await DataUtils.getUsername();
     if(__username != ""){
-      print(__username);
+      //print(__username);
       String userUrl = baseUrl + __username;
       final rsp = await Dio().get(userUrl);
       if (mounted) {
