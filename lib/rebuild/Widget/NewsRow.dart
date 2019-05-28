@@ -1,8 +1,29 @@
 // NewsRow.dart 新闻列表中的行组件,显示一条新闻
-
 import 'package:flutter/material.dart';
 import '../Models/News.dart';
 import '../Views/NewsDetailPage.dart';
+import '../Util/DataUtils.dart';
+import 'package:dio/dio.dart';
+import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
+
+// 各个频道对应的英文
+Map<String, String> channelNameToEng = {
+  '国内': 'domestic',
+  '国际': 'international',
+  '财经': 'finance',
+  '娱乐': 'entertainment',
+  '汽车': 'car',
+  '军事': 'military',
+  '社会': 'society',
+  '体育': 'sport',
+  '教育': 'edu',
+  '数字': 'digit',
+  '游戏': 'game',
+  '科技': 'tech',
+  '互联网': 'internet',
+  '房地产': 'estate',
+};
 
 
 // 没有张图片的新闻列表项
@@ -15,6 +36,8 @@ class NewsRowWithoutPic extends StatefulWidget {
 }
 
 class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
+
+  final saveUrl = "http://111.231.57.151:8000/save/";
 
   // 格式化数据库传来的datetime字符串
   String modifyTime(){
@@ -36,12 +59,19 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
     return widget.newsItem.source+ "    " +outputTime;
   }
 
+
+  // 添加收藏
+  addSave(String username)async{
+      String _url = saveUrl + username + "/" + channelNameToEng[widget.newsItem.channelname] + "/" +widget.newsItem.id;
+      debugPrint('添加收藏记录: $_url');
+      await Dio().post(_url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          // 点击进入新闻详情页
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem:widget.newsItem)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.newsItem.channelname, news_id: widget.newsItem.id,)));
         },//onTap
         child: new Card(
           child: new Material(
@@ -91,8 +121,36 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                                 children: <Widget>[
                                   new PopupMenuButton(
                                     //菜单选项点击事件
-                                    onSelected: (value) {
-                                      print("点击了$value选项");
+                                    onSelected: (value) async {
+                                      //print("点击了$value选项");
+                                      if(value == '1'){
+                                        // 添加收藏记录
+                                        String _username =await DataUtils.getUsername();
+                                        if(_username != ""){
+                                          await addSave(_username);
+                                          Fluttertoast.showToast(
+                                            msg: "收藏成功",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIos: 1,
+                                            backgroundColor: Colors.black54,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                          );
+                                        }else{
+                                          Fluttertoast.showToast(
+                                            msg: "请先登录",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIos: 1,
+                                            backgroundColor: Colors.black54,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                          );
+                                        }
+                                      }else if(value == '2'){
+                                        print(value);
+                                      }
                                     },
                                     icon: Icon(
                                       Icons.more_horiz,
@@ -100,13 +158,13 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                                     ),
                                     itemBuilder: (BuildContext context) => [
                                           PopupMenuItem(
-                                            value: '收藏',
+                                            value: '1',
                                             child: Text(
                                               '添加到我的收藏',
                                             ),
                                           ),
                                           PopupMenuItem(
-                                            value: '推荐',
+                                            value: '2',
                                             child: Text(
                                               '推荐更多相似新闻',
                                             ),
@@ -137,6 +195,7 @@ class NewsRowWithPic extends StatefulWidget {
 }
 
 class _NewsRowWithPicState extends State<NewsRowWithPic> {
+  final saveUrl = "http://111.231.57.151:8000/save/";
 
   // 格式化数据库传来的datetime字符串
   String modifyTime(){
@@ -148,12 +207,20 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
     return outputTime;
   }
 
+
+  // 添加收藏
+  addSave(String username)async{
+      String _url = saveUrl + username + "/" + channelNameToEng[widget.newsItem.channelname] + "/" +widget.newsItem.id;
+      debugPrint('添加收藏记录: $_url');
+      await Dio().post(_url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           // 单击进入新闻详情页
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem:widget.newsItem)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.newsItem.channelname, news_id: widget.newsItem.id,)));
         },//onTap
         child: new Card(
           child: new Material(
@@ -218,8 +285,36 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                                 children: <Widget>[
                                   new PopupMenuButton(
                                     //
-                                    onSelected: (value) {
-                                      print(value);
+                                    onSelected: (value) async {
+                                      //print("点击了$value选项");
+                                      if(value == '1'){
+                                        // 添加收藏记录
+                                        String _username =await DataUtils.getUsername();
+                                        if(_username != ""){
+                                          await addSave(_username);
+                                          Fluttertoast.showToast(
+                                            msg: "收藏成功",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIos: 1,
+                                            backgroundColor: Colors.black54,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                          );
+                                        }else{
+                                          Fluttertoast.showToast(
+                                            msg: "请先登录",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIos: 1,
+                                            backgroundColor: Colors.black54,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                          );
+                                        }
+                                      }else if(value == '2'){
+                                        print(value);
+                                      }
                                     },
                                     icon: Icon(
                                       Icons.more_horiz,
@@ -227,13 +322,13 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                                     ),
                                     itemBuilder: (BuildContext context) => [
                                           PopupMenuItem(
-                                            value: 'shoucang',
+                                            value: '1',
                                             child: Text(
                                               '添加到我的收藏',
                                             ),
                                           ),
                                           PopupMenuItem(
-                                            value: 'tuijian',
+                                            value: '2',
                                             child: Text(
                                               '推荐更多相似新闻',
                                             ),

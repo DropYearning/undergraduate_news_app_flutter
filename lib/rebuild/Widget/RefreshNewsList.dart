@@ -207,10 +207,11 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
             onRefresh: () async{
               // 一定要使用await先执行更新,否则会出现异步错误
               await fetchUpdateList();
-              print("[onRefresh函数]:输出下拉之前的newsList");
-              printList(newsList);
-              print("[onRefresh函数]:输出更新之后的newsListNew");
-              printList(newsListNew);
+              // // 调试输出
+              // print("[onRefresh函数]:输出下拉之前的newsList");
+              // printList(newsList);
+              // print("[onRefresh函数]:输出更新之后的newsListNew");
+              // printList(newsListNew);
               int updateCount = updateList.length;
               await new Future.delayed(const Duration(seconds: 1), () {
                 if(updateCount !=0 ){
@@ -246,8 +247,9 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
                 morePageIndex = morePageIndex+1;
               });
               await fetchMoreList();
-              print("当前下拉到的页数为:"+morePageIndex.toString());
-              printList(moreList);
+              // // 调试输出
+              // print("当前下拉到的页数为:"+morePageIndex.toString());
+              // printList(moreList);
               await new Future.delayed(const Duration(seconds: 1), () {
                 setState(() {
                   newsList.addAll(moreList);

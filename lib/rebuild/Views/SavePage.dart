@@ -1,5 +1,6 @@
 // SavePage 用户收藏页面
 import 'package:flutter/material.dart';
+import '../Widget/SaveBody.dart';
 
 class SavaPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _SavaPageState extends State<SavaPage> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Container(),
+      body: SaveBody(),
     );
   }
 }

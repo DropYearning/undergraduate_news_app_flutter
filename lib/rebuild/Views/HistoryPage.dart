@@ -1,5 +1,7 @@
 // HistoryPage 用户历史页
 import 'package:flutter/material.dart';
+import '../Widget/HistoryBody.dart';
+
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -9,13 +11,14 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text('用户历史'),
+        title: Text('浏览历史'),
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Container(),
+      body: HistoryBody(),
     );
   }
 }
+

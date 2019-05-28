@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
 import '../Models/NewsDetail.dart';
-import '../Models/News.dart';
 import '../Widget/DetailBody.dart';
 import '../Views/WebNewsPage.dart';
+import '../Util/DataUtils.dart';
 
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
@@ -24,30 +24,43 @@ Map<String, String> channelNameToEng = {
   '房地产': 'estate',
 };
 
-class NewsDetailPage extends StatefulWidget {
-  final News newsItem;
-  NewsDetailPage({Key key, @required this.newsItem}) : super(key: key);
+class DetailPage extends StatefulWidget {
+  final String news_id;
+  final String news_channel;
+  DetailPage({Key key, @required this.news_id, @required this.news_channel}) : super(key: key);
   @override
-  _NewsDetailPageState createState() => _NewsDetailPageState();
+  _DetailPageState createState() => _DetailPageState();
 }
 
-class _NewsDetailPageState extends State<NewsDetailPage> {
+class _DetailPageState extends State<DetailPage> {
   // 一个请求例子(http://111.231.57.151:8000/detail/edu/ee5299b03326c1f816031f912dae31d7)
   final baseUrl = "http://111.231.57.151:8000/detail/";
-
+  final historyUrl = "http://111.231.57.151:8000/history/";
   NewsDetail newsItemWithHTML = new NewsDetail();
 
   @override
   void initState() {
      fetchNewsDetail();
+     addHistory();
     super.initState();
+  }
+
+  addHistory()async{
+    String username = await DataUtils.getUsername();
+    // 仅当有用户登录时添加记录
+    if(username !="")
+    {
+      String _url = historyUrl + username + "/" + channelNameToEng    [widget.news_channel] + "/" +widget.news_id;
+      debugPrint('添加访问记录: $_url');
+      await Dio().post(_url);
+    }
   }
 
   fetchNewsDetail() async {
     String detailUrl = baseUrl +
-        channelNameToEng[widget.newsItem.channelname] +
+        channelNameToEng[widget.news_channel] +
         "/" +
-        widget.newsItem.id;
+        widget.news_id;
     final rsp = await Dio().get(detailUrl);
     // 如果请求成功
     if (rsp.statusCode == 200) {
@@ -67,7 +80,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   // 格式化数据库传来的datetime字符串
   String modifyTime() {
-    String inputTime = widget.newsItem.pubtime;
+    String inputTime = newsItemWithHTML.pubtime;
     String date = inputTime.split("T")[0];
     String time = inputTime.split("T")[1];
     String subtime = time.substring(0, 5);
@@ -107,7 +120,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.open_in_new),
         onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebNewsVisit(link:widget.newsItem.link)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebNewsVisit(link:newsItemWithHTML.link)));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

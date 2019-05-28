@@ -1,10 +1,7 @@
 // 新闻详情页body组件
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html_textview/flutter_html_textview.dart';
 import '../Models/NewsDetail.dart';
-import 'package:dio/dio.dart';
-import 'dart:async';
 
 String modifyTime(String input) {
     String date = input.split("T")[0];
@@ -82,76 +79,6 @@ Widget buildDetailBody(NewsDetail newsItemWithHTML){
             ),
           )
         );
-}
-
-
-
-
-// 方法二:使用FutureBuilder构建详情页主体
-class FutureBodyBuilder extends StatefulWidget {
-  final String newsUrl;
-  FutureBodyBuilder({Key key, @required this.newsUrl}) : super(key: key);
-  @override
-  _FutureBodyBuilderState createState() => _FutureBodyBuilderState();
-}
-
-class _FutureBodyBuilderState extends State<FutureBodyBuilder> {
- 
-  
-  final baseUrl = "http://111.231.57.151:8000/detail/";
-  NewsDetail newsItemWithHTML ;
-
-  @override
-  void initState() {
-    fetchNewsDetail();
-    super.initState();
-  }
-
-  fetchNewsDetail() async {
-    String detailUrl = widget.newsUrl;
-    final rsp = await Dio().get(detailUrl);
-    // 如果请求成功
-    if (rsp.statusCode == 200) {
-      var newsMap = rsp.data[0];
-      // serializable成对象
-      NewsDetail _newsDetail = new NewsDetail.fromJson(newsMap);
-      if (mounted) {
-          setState(() {
-            newsItemWithHTML = _newsDetail;
-          });
-      }
-    } else {
-      throw Exception('Falied');
-    }
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future:fetchNewsDetail(),
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        // 如果网络请求未结束显示Loading...
-        if (snapshot.connectionState == ConnectionState.waiting){
-          return Center(
-            child: Text('loading...') ,
-            );
-        }
-        return ListView(
-          children: snapshot.data.map<Widget>((item){
-            return ListTile(
-              title: Text(item.title),
-              subtitle:Text(item.source) ,
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(item.picurl1),
-              ),
-            );
-          }).toList(),
-        );
-      }
-    );
-  }
 }
 
 
