@@ -19,10 +19,14 @@ class RefreshNewsList extends StatefulWidget {
   _RefreshNewsListState createState() => _RefreshNewsListState();
 }
 
-class _RefreshNewsListState extends State<RefreshNewsList> {
+class _RefreshNewsListState extends State<RefreshNewsList> with AutomaticKeepAliveClientMixin {
   GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
   GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
   GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
+
+
+  @override
+  bool get wantKeepAlive => true;
 
   // 当前所有新闻的列表
   List<News> newsList = [];
@@ -155,6 +159,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> {
   // 返回构建
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if(newsList.length != 0) {
         return  Center(
           child: new EasyRefresh(

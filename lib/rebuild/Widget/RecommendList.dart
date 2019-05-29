@@ -13,10 +13,13 @@ class RecommendList extends StatefulWidget {
   _RecommendListState createState() => _RecommendListState();
 }
 
-class _RecommendListState extends State<RecommendList> {
+class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveClientMixin {
   GlobalKey<EasyRefreshState> _easyRefreshKey = new GlobalKey<EasyRefreshState>();
   GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
   GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
+
+  @override
+  bool get wantKeepAlive => true;
 
   // 初始新闻列表
   List<News> startList = [];
@@ -30,11 +33,21 @@ class _RecommendListState extends State<RecommendList> {
 
   // 获取初始新闻列表
   fetchStartList()async{
-    
+    String _url = "http://111.231.57.151:8000/rcm4random10/";
+    final rsp = await Dio().get(_url);
+    List<News> _newslist = rsp.data
+      .map<News>( (item) => News.fromJson(item) )
+      .toList();
+    if (mounted) {
+        setState(() {
+          startList = _newslist;
+        });
+      } 
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if(startList.length != 0) {
         return  Center(
           child: new EasyRefresh(
