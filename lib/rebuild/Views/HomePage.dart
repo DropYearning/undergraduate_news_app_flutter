@@ -1,10 +1,10 @@
+// app首页
 import 'package:flutter/material.dart';
 import '../Widget/ButtomBar.dart';
 import '../Widget/Drawer.dart';
 import '../Widget/RefreshNewsList.dart';
+import '../Widget/RecommendList.dart';
 
-
-// app首页类
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -65,15 +65,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               isScrollable: true,
               tabs: _channelTabs,
               controller: _tabController,
-
             ),
       ),
       drawer: MyDrawer(),
       body: TabBarView(
           controller: _tabController, 
           children: <Widget>[
-            // 对应14个频道的TabBarView中显示的内容
-            RefreshNewsList(channelName: 'domestic',),
+            // 设置特别的推荐频道
+            RecommendList(),
+            // 下面十四个频道
             RefreshNewsList(channelName: 'domestic',),
             RefreshNewsList(channelName: 'international'),
             RefreshNewsList(channelName: 'finance',),

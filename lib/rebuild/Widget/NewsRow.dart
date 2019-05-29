@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import '../Models/News.dart';
 import '../Views/DetailPage.dart';
+import '../Views/ResultPage.dart';
 import '../Util/DataUtils.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Widget/MyToast.dart';
+
 
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
@@ -19,7 +21,7 @@ Map<String, String> channelNameToEng = {
   '社会': 'society',
   '体育': 'sport',
   '教育': 'edu',
-  '数字': 'digit',
+  '数码': 'digit',
   '游戏': 'game',
   '科技': 'tech',
   '互联网': 'internet',
@@ -129,12 +131,13 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                                         String _username =await DataUtils.getUsername();
                                         if(_username != ""){
                                           await addSave(_username);
-                                            showToast("收藏成功");
+                                          showToast("收藏成功");
                                         }else{
-                                            showToast("请先登录");
+                                          showToast("请先登录");
                                         }
                                       }else if(value == '2'){
-                                        print(value);
+                                        // 跳转推荐结果列表
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
                                       }
                                     },
                                     icon: Icon(
@@ -282,7 +285,8 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                                           showToast("请先登录");
                                         }
                                       }else if(value == '2'){
-                                        print(value);
+                                        // 跳转推荐结果列表
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
                                       }
                                     },
                                     icon: Icon(

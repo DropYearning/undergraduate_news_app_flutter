@@ -77,7 +77,7 @@ class _HistoryPageState extends State<HistoryPage> {
         ],
       ),
       body: HistoryBody(),
-    );
+      );
     }else{
       return Scaffold(
         appBar: AppBar(

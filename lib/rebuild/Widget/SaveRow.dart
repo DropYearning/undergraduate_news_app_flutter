@@ -52,8 +52,8 @@ class _SaveRowState extends State<SaveRow> {
       onTap: (){
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.saveItem.news_channel, news_id: widget.saveItem.news_id,)));
       },
-      title: Text(widget.saveItem.news_title),
-      subtitle:Text("收藏时间: ${modifyTime(widget.saveItem.savetime)}") ,
+      title: Text(widget.saveItem.news_title,style: TextStyle(fontSize: 18)),
+      subtitle:Text("收藏时间: ${modifyTime(widget.saveItem.savetime)}",style: TextStyle(fontSize: 16)) ,
       trailing: new IconButton(
         icon:_changeIcon(), 
         onPressed:()async{

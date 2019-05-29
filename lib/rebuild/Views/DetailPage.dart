@@ -39,6 +39,8 @@ class _DetailPageState extends State<DetailPage> {
   final historyUrl = "http://111.231.57.151:8000/history/";
   NewsDetail newsItemWithHTML = new NewsDetail();
   bool isSaved = false;
+  bool isLogin;
+  String username;
 
   // 用于改变图标
   Icon _changeIcon(){
@@ -49,35 +51,59 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
-
   @override
   void initState() {
-     fetchNewsDetail();
-     addHistory();
+    checkLogin();
+    fetchNewsDetail();
     super.initState();
   }
 
+  // 检查登录状态, 同时检查收藏状态
+  checkLogin()async{
+    String _username = await DataUtils.getUsername();
+    bool _isLogin = await DataUtils.getIslogin();
+    if(mounted){
+      setState(() {
+        isLogin = _isLogin;
+        username = _username;
+      });
+    }
+    // 检查收藏状态
+    if(_username !="" && _isLogin == true ){
+       String _url = "http://111.231.57.151:8000/checksave/" + username + "/" + widget.news_id;
+       final rsp = await Dio().get(_url);
+       if(rsp.data['code'] == '888'){
+          if(mounted){
+            setState(() {
+              isSaved = true;
+            });
+          }
+       }else if(rsp.data['code'] == '889'){
+          if(mounted){
+            setState(() {
+              isSaved = false;
+            });
+          }
+       }
+    }
+  }
+
   addHistory()async{
-    String username = await DataUtils.getUsername();
-    bool isLogin = await DataUtils.getIslogin();
-    // 仅当有用户登录时添加记录
-    if(username !="" && isLogin==true)
-    {
+    if(username =="" || isLogin == null || isLogin == false){
+      //do nothing
+    }else{
       String _url = historyUrl + username + "/" + channelNameToEng [widget.news_channel] + "/" + widget.news_id;
       debugPrint('添加访问记录: $_url');
       await Dio().post(_url);
-    }else{
-      
     }
   }
 
   addSave() async{
-     String username = await DataUtils.getUsername();
     // 仅当有用户登录时添加记录
-    if(username ==""){
+    if(username =="" || isLogin == null || isLogin == false){
       showToast("请先登录");
     }else{
-        String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[newsItemWithHTML.channelname] + "/" +newsItemWithHTML.id;
+        String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[widget.news_channel] + "/" + widget.news_id;
         debugPrint('添加收藏记录: $_url');
         await Dio().post(_url);
         setState(() {
@@ -85,6 +111,16 @@ class _DetailPageState extends State<DetailPage> {
         });
         showToast("收藏成功");
     }
+  }
+
+  cancelSave() async{
+    String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[widget.news_channel] + "/" + widget.news_id;
+        debugPrint('取消收藏记录: $_url');
+        await Dio().delete(_url);
+        setState(() {
+          isSaved = false;
+        });
+        showToast("取消成功");
   }
 
   fetchNewsDetail() async {
@@ -121,6 +157,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // addHistory()必须在initState()方法结束后才能被调用
+    addHistory();
     // 下面的这个if/else判断十分重要, 因为DIO请求newsItemWithHTML是异步进行的,Setstate方法会使组件被重绘
     // 因此在绘制buildDetailBody组件之前,必须保证newsItemWithHTML中已经得到了要请求的数据,否则会出现called on null
     // 错误
@@ -129,7 +167,11 @@ class _DetailPageState extends State<DetailPage> {
         appBar: AppBar(
         title: Text('新闻详情'),
         actions: <Widget>[IconButton(icon: _changeIcon(), onPressed: () async{  
-          await addSave();
+          if(isSaved == false){
+            await addSave();
+          }else{
+            await cancelSave();
+          }
         },)],
         elevation: 0.0,
         centerTitle: true,
@@ -144,7 +186,11 @@ class _DetailPageState extends State<DetailPage> {
         title: Text('新闻详情'),
         // TODO: 完成分享新闻详情按钮
         actions: <Widget>[IconButton(icon: _changeIcon(), onPressed: () async{ 
+          if(isSaved == false){
             await addSave();
+          }else{
+            await cancelSave();
+          }
         },)],
         elevation: 0.0,
         centerTitle: true,

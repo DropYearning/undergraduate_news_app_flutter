@@ -1,4 +1,4 @@
-
+// HistoryRow 访问历史列表中的一行
 import 'package:flutter/material.dart';
 import '../Models/HistoryItem.dart';
 import '../Views/DetailPage.dart';
@@ -23,18 +23,12 @@ class _HistoryRowState extends State<HistoryRow> {
 
   @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
-    //   onTap: (){
-    //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.historyItem.news_channel, news_id: widget.historyItem.news_id,)));
-    //   },
-    //   child: ,
-    // );
     return ListTile(
       onTap: (){
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.historyItem.news_channel, news_id: widget.historyItem.news_id,)));
       },
-      title: Text(widget.historyItem.news_title),
-      subtitle:Text("浏览时间: ${modifyTime(widget.historyItem.savetime)}") ,
+      title: Text(widget.historyItem.news_title, style: TextStyle(fontSize: 18)),
+      subtitle:Text("浏览时间: ${modifyTime(widget.historyItem.savetime)}", style: TextStyle(fontSize: 16)) ,
     );
   }
 }

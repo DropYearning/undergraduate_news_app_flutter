@@ -30,7 +30,6 @@ class _SettingPageBodyLogedState extends State<SettingPageBodyLoged> {
           color: Colors.white,
         ),
         Container(
-          //padding: EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 30.0),
           width: 120.0,
           height: 120.0,
           decoration: BoxDecoration(
@@ -82,7 +81,6 @@ class _SettingPageBodyLogedState extends State<SettingPageBodyLoged> {
           ),
           title: Text('后台管理',
               textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-          // onTap: ()=> Navigator.of(context).pushNamed("/xadmin"),
           onTap: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => XadminPage()));
@@ -100,7 +98,6 @@ class _SettingPageBodyLogedState extends State<SettingPageBodyLoged> {
           title: Text('测试按钮',
               textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
           onTap: () async {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage());
             String _username = await DataUtils.getUsername();
             bool _isLogin = await DataUtils.getIslogin();
             debugPrint('当前登录的用户名为:$_username, $_isLogin');
@@ -135,12 +132,38 @@ class _SettingPageBodyLogedState extends State<SettingPageBodyLoged> {
         ),
         ListTile(
           leading: Icon(
+            Icons.help_outline,
+            size: 25.0,
+          ),
+          title: Text('关于项目',
+              textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_)=>AboutDialog(
+                applicationName: 'Newshub Demo',
+                applicationIcon: Icon(Icons.help_outline),
+                applicationVersion: 'v1.0',
+                children: <Widget>[
+                  Text('HDU2019毕业设计'),
+                  Text('15051349 周亮'),
+                  Text('基于Android的新闻推荐客户端设计与实现'),
+                ],
+              )
+            );
+          },
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            size: 25.0,
+          ),
+        ),
+        ListTile(
+          leading: Icon(
             Icons.cancel,
             size: 25.0,
           ),
           title: Text('退出登录',
               textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-          //onTap: ()=> Navigator.pop(context),
           onTap: () async {
             // 这个await必须加,必须先等待用户信息被清除
             await DataUtils.clearLoginStatus();
@@ -205,7 +228,6 @@ class _SettingPageBodyUnlogedState extends State<SettingPageBodyUnloged> {
           ),
           title: Text('注册登陆',
               textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-          //onTap: ()=> Navigator.of(context).pushNamed("/reg"),
           onTap: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => LoginPage()));
@@ -239,7 +261,6 @@ class _SettingPageBodyUnlogedState extends State<SettingPageBodyUnloged> {
           title: Text('测试按钮',
               textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
           onTap: () async {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage());
             String _username = await DataUtils.getUsername();
             bool _isLogin = await DataUtils.getIslogin();
             debugPrint('当前登录的用户名为:$_username, $_isLogin');
@@ -265,6 +286,33 @@ class _SettingPageBodyUnlogedState extends State<SettingPageBodyUnloged> {
                   onPressed: () {},
                 ),
               ),
+            );
+          },
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            size: 25.0,
+          ),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.help_outline,
+            size: 25.0,
+          ),
+          title: Text('关于项目',
+              textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_)=>AboutDialog(
+                applicationName: 'Newshub Demo',
+                applicationIcon: Icon(Icons.help_outline),
+                applicationVersion: 'v1.0',
+                children: <Widget>[
+                  Text('HDU2019毕业设计'),
+                  Text('15051349 周亮'),
+                  Text('基于Android的新闻推荐客户端设计与实现'),
+                ],
+              )
             );
           },
           trailing: Icon(
