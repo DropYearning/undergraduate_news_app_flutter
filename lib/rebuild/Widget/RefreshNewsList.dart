@@ -230,7 +230,7 @@ class _RefreshNewsListState extends State<RefreshNewsList> with AutomaticKeepAli
               });
               String toastMsg = "";
               if (updateCount != 0) {
-                toastMsg = "已为您更新$updateCount条新闻";
+                toastMsg = "已为您更新${updateCount}条新闻";
               } else {
                 toastMsg = "暂无更新";
               }

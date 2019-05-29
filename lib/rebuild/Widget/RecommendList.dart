@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
 import '../Models/News.dart';
 import './NewsRow.dart';
+import '../Widget/MyToast.dart';
 
 
 class RecommendList extends StatefulWidget {
@@ -22,7 +23,11 @@ class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveC
   bool get wantKeepAlive => true;
 
   // 初始新闻列表
-  List<News> startList = [];
+  List<News> newsList = [];
+  // 下拉更新新增的列表 
+  List<News> updateList = [];
+  // 用来代替原来新闻列表的列表
+  List<News> newsListNew = [];
 
   @override
   void initState(){
@@ -40,15 +45,39 @@ class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveC
       .toList();
     if (mounted) {
         setState(() {
-          startList = _newslist;
+          newsList = _newslist;
         });
       } 
+  }
+
+  // 获取下拉推荐
+  fetchRcmList() async{
+    String _rcmUrl = "http://111.231.57.151:8000/rcm4random3/";
+    final rsp = await Dio().get(_rcmUrl);
+     List<News> _rcmList = rsp.data
+          .map<News>( (item) => News.fromJson(item) )
+          .toList();
+    // 先清空之前的更新列表
+    setState(() {
+      updateList.clear();
+      newsListNew.clear();
+      //将当前的newsList赋值给NewsListNew
+      newsListNew.addAll(newsList);
+    });
+    // 倒序插入 _rcmList(请求到的推荐列表)到newsListNew中
+    for(int i=_rcmList.length-1;i>=0;i--)
+      {
+        setState(() {
+          updateList.add(_rcmList[i]);
+          newsListNew.insert(0, _rcmList[i]);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if(startList.length != 0) {
+    if(newsList.length != 0) {
         return  Center(
           child: new EasyRefresh(
             key: _easyRefreshKey,
@@ -84,24 +113,38 @@ class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveC
             ),
             child: new ListView.builder(
               //ListView的Item
-                itemCount: startList.length,
+                itemCount: newsList.length,
                 itemBuilder: (BuildContext context,int index){
                   // 根据图片数判断生成哪种新闻行组件
-                  if(startList[index].havepic == 0)
-                    return NewsRowWithoutPic(newsItem:startList[index]);
+                  if(newsList[index].havepic == 0)
+                    return NewsRowWithoutPic(newsItem:newsList[index]);
                   else{
-                    return NewsRowWithPic(newsItem:startList[index]);
+                    return NewsRowWithPic(newsItem:newsList[index]);
                   }
                 }
             ),
 
             // 设置下拉事件
             onRefresh: () async{
-
+              await fetchRcmList();
+              int updateCount = updateList.length;
+              await new Future.delayed(const Duration(seconds: 1), () {
+                if(updateCount !=0 ){
+                  //如果有更新
+                  setState(() {
+                    newsList.clear();
+                    newsList.addAll(newsListNew);
+                  });
+                  showToast('已为您推荐${updateCount}条新闻');
+                }else{
+                  //如果没有更新
+                  showToast('暂时没有更多哦');
+                }
+              });
             },
             // 推荐频道没有上拉事件
             loadMore: () async {
-              
+              // do nothing
             },
           ),
         );
