@@ -100,11 +100,11 @@ class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveC
             // 上拉样式设置
             refreshFooter: ClassicsFooter(
               key: _footerKey,
-              loadText: "向上滑动加载更多",
+              loadText: "该频道已到底",
               loadReadyText: "释放",
-              loadingText:"正在加载...",
-              loadedText: "加载成功",
-              noMoreText: "noMore",
+              loadingText:"该频道已到底",
+              loadedText: "该频道已到底",
+              noMoreText: "该频道已到底",
               //moreInfo: "updateAt",
               bgColor: Colors.transparent,
               textColor: Colors.black87,

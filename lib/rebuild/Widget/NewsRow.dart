@@ -9,7 +9,6 @@ import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Widget/MyToast.dart';
 
-
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
   '国内': 'domestic',
@@ -39,8 +38,18 @@ class NewsRowWithoutPic extends StatefulWidget {
 }
 
 class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
-
   final saveUrl = "http://111.231.57.151:8000/save/";
+  final historyUrl = "http://111.231.57.151:8000/history/";
+  
+  bool isLogin;
+  String username;
+  bool isClicked = false;
+
+  @override
+  void initState() {
+    checkLogin();
+    super.initState();
+  }
 
   // 格式化数据库传来的datetime字符串
   String modifyTime(){
@@ -62,6 +71,17 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
     return widget.newsItem.source+ "    " +outputTime;
   }
 
+  // 检查登录状态
+  checkLogin()async{
+    String _username = await DataUtils.getUsername();
+    bool _isLogin = await DataUtils.getIslogin();
+    if(mounted){
+      setState(() {
+        isLogin = _isLogin;
+        username = _username;
+      });
+    }
+  }
 
   // 添加收藏
   addSave(String username)async{
@@ -70,10 +90,40 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
       await Dio().post(_url);
   }
 
+  // 添加访问记录
+  addHistory()async{
+    if(username =="" || isLogin == null || isLogin == false){
+      //do nothing
+    }else{
+      String _url = historyUrl + username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
+      debugPrint('添加访问记录: $_url');
+      await Dio().post(_url);
+    }
+  }
+
+  // 根据点击情况改变字体颜色 color: Colors.grey
+  Color _changeColor(){
+    if(isClicked == false){
+      return Colors.black;
+    }else{
+      return Colors.grey;
+    }
+  }
+
+  // 设置点击状态
+  setClicked(){
+    setState(() {
+      isClicked = true;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
+        onTap: ()  {
+            setClicked();
+            addHistory();
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.newsItem.channelname, news_id: widget.newsItem.id,)));
         },//onTap
         child: new Card(
@@ -92,7 +142,7 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                             widget.newsItem.title,
                             style: new TextStyle(
                               fontSize: 20.0,
-                              color: Colors.black,
+                              color: _changeColor(),
                             ),
                           )),
                       new Row(
@@ -183,7 +233,18 @@ class NewsRowWithPic extends StatefulWidget {
 }
 
 class _NewsRowWithPicState extends State<NewsRowWithPic> {
+  
   final saveUrl = "http://111.231.57.151:8000/save/";
+  final historyUrl = "http://111.231.57.151:8000/history/";
+  bool isLogin;
+  String username;
+  bool isClicked = false;
+
+  @override
+  void initState() {
+    checkLogin();
+    super.initState();
+  }
 
   // 格式化数据库传来的datetime字符串
   String modifyTime(){
@@ -195,6 +256,28 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
     return outputTime;
   }
 
+  // 检查登录状态
+  checkLogin()async{
+    String _username = await DataUtils.getUsername();
+    bool _isLogin = await DataUtils.getIslogin();
+    if(mounted){
+      setState(() {
+        isLogin = _isLogin;
+        username = _username;
+      });
+    }
+  }
+
+  // 添加访问记录
+  addHistory()async{
+    if(username =="" || isLogin == null || isLogin == false){
+      //do nothing
+    }else{
+      String _url = historyUrl + username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
+      debugPrint('添加访问记录: $_url');
+      await Dio().post(_url);
+    }
+  }
 
   // 添加收藏
   addSave(String username)async{
@@ -203,11 +286,30 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
       await Dio().post(_url);
   }
 
+
+  // 根据点击情况改变字体颜色 color: Colors.grey
+  Color _changeColor(){
+    if(isClicked == false){
+      return Colors.black;
+    }else{
+      return Colors.grey;
+    }
+  }
+
+  // 设置点击状态
+  setClicked(){
+    setState(() {
+      isClicked = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           // 单击进入新闻详情页
+          setClicked();
+          addHistory();
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(news_channel: widget.newsItem.channelname, news_id: widget.newsItem.id,)));
         },//onTap
         child: new Card(
@@ -226,7 +328,7 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                             widget.newsItem.title,
                             style: new TextStyle(
                               fontSize: 20.0,
-                              color: Colors.black,
+                              color: _changeColor(),
                             ),
                           )),
                       new Row(

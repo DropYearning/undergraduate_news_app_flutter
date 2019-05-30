@@ -36,7 +36,6 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   // 一个请求例子(http://111.231.57.151:8000/detail/edu/ee5299b03326c1f816031f912dae31d7)
   final baseUrl = "http://111.231.57.151:8000/detail/";
-  final historyUrl = "http://111.231.57.151:8000/history/";
   NewsDetail newsItemWithHTML = new NewsDetail();
   bool isSaved = false;
   bool isLogin;
@@ -85,16 +84,6 @@ class _DetailPageState extends State<DetailPage> {
             });
           }
        }
-    }
-  }
-
-  addHistory()async{
-    if(username =="" || isLogin == null || isLogin == false){
-      //do nothing
-    }else{
-      String _url = historyUrl + username + "/" + channelNameToEng [widget.news_channel] + "/" + widget.news_id;
-      debugPrint('添加访问记录: $_url');
-      await Dio().post(_url);
     }
   }
 
@@ -157,8 +146,6 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // addHistory()必须在initState()方法结束后才能被调用
-    addHistory();
     // 下面的这个if/else判断十分重要, 因为DIO请求newsItemWithHTML是异步进行的,Setstate方法会使组件被重绘
     // 因此在绘制buildDetailBody组件之前,必须保证newsItemWithHTML中已经得到了要请求的数据,否则会出现called on null
     // 错误
