@@ -4,7 +4,7 @@ import '../Views/XadminPage.dart';
 import '../Views/LoginPage.dart';
 import '../Views/HistoryPage.dart';
 import '../Views/SavePage.dart';
-import '../Views/SettingPage.dart';
+import '../Views/UserPage.dart';
 import '../Util/DataUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
@@ -81,14 +81,14 @@ class _MyDrawerState extends State<MyDrawer> {
               },
             ),
             Divider(),
-              ListTile(
+            ListTile(
               leading: Icon(Icons.add_to_home_screen, size: 25.0,),
               title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage()));
               },
             ),
-              ListTile(
+            ListTile(
               leading: Icon(Icons.adb, size: 25.0,),
               title: Text('测试按钮', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
               onTap: ()async {
@@ -98,7 +98,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   debugPrint('当前登录的用户名为:$_username, $_isLogin');
               },
             ),
-              ListTile(
+            ListTile(
               leading: Icon(Icons.cancel, size: 25.0,),
               title: Text('关闭菜单', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
               onTap: ()=> Navigator.pop(context),
@@ -152,7 +152,7 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           Divider(),
-            ListTile(
+          ListTile(
             leading: Icon(Icons.add_to_home_screen, size: 25.0,),
             title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             // onTap: ()=> Navigator.of(context).pushNamed("/xadmin"),
@@ -160,7 +160,7 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => XadminPage()));
             },
           ),
-            ListTile(
+          ListTile(
             leading: Icon(Icons.adb, size: 25.0,),
             title: Text('测试按钮', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             onTap: ()async {
@@ -170,7 +170,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 debugPrint('当前登录的用户名为:$_username, $_isLogin');
             },
           ),
-            ListTile(
+          ListTile(
             leading: Icon(Icons.cancel, size: 25.0,),
             title: Text('退出登录', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
             //onTap: ()=> Navigator.pop(context),

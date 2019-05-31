@@ -24,7 +24,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2 # 用于IOS系统中图标的适配
   flutter_webview_plugin: ^0.3.5 # 在新闻详情页实现源链接的访问
-  flutter_html_textview: ^0.2.6 # 在新闻详情页解析HTML
+  flutter_html: ^0.10.1 # 解析HTML为Flutter Widget
   dio: ^2.1.3 # 用于替代Flutter官方的HTTP请求和解析库
   fluttertoast: ^3.1.0 # 用于实现类似Android原生APP类似的Toast效果
   flutter_easyrefresh: ^1.2.7 # 用于下拉更新和上拉加载更多

@@ -1,7 +1,14 @@
+/*
+ * @Author: Brightzh 
+ * @Date: 2019-05-31 13:07:25 
+ * @Last Modified by: Brightzh
+ * @Last Modified time: 2019-05-31 14:14:22
+ */
 // 新闻详情页body组件
+
 import 'package:flutter/material.dart';
-import 'package:flutter_html_textview/flutter_html_textview.dart';
 import '../Models/NewsDetail.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 String modifyTime(String input) {
     String date = input.split("T")[0];
@@ -9,16 +16,7 @@ String modifyTime(String input) {
     String subtime = time.substring(0, 5);
     String outputTime = date + "  " + subtime;
     return outputTime;
-  }
-
-// TODO: 如何自定义HTML内容中文字的大小?
-// 本来是想用CSS的办法曲线救国的,结果解析器不支持,加上后会出现图片显示错误的问题
-String addCSS(String html){
-  String fontSize = '20px';
-
-  return "<div style=\"font-size:$fontSize\">" + html + "</div>";
 }
-
 
 Widget buildDetailBody(NewsDetail newsItemWithHTML){
   return SingleChildScrollView(
@@ -29,7 +27,7 @@ Widget buildDetailBody(NewsDetail newsItemWithHTML){
                  Container(
                         alignment: Alignment.centerLeft,
                         //padding: const EdgeInsets.only(bottom: 5.0),
-                        padding: const EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 10.0),
+                        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
                         child: new Text(
                           // 插入新闻标题
                           newsItemWithHTML.title,
@@ -72,8 +70,11 @@ Widget buildDetailBody(NewsDetail newsItemWithHTML){
                   ),
                 Divider(height: 10.0, indent: 10.0, color: Colors.black54,),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  child: HtmlTextView(data: newsItemWithHTML.html),
+                  padding:const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 0.0) ,
+                  child:Html(
+                  data:newsItemWithHTML.html,
+                  defaultTextStyle: TextStyle(fontSize: 17),
+                ),
                 ),
               ],
             ),

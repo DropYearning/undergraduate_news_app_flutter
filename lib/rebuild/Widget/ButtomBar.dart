@@ -1,7 +1,7 @@
 // 首页底部导航栏
 import 'package:flutter/material.dart';
 import '../Views/LoginPage.dart';
-import '../Views/SettingPage.dart';
+import '../Views/UserPage.dart';
 import '../Views/SavePage.dart';
 import '../Util/DataUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,7 +54,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页'),),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), title: Text('收藏')),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text('设置')),
+          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('我的')),
         ],
       );
   }

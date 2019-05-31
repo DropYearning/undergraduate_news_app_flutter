@@ -4,11 +4,11 @@ import '../Views/XadminPage.dart';
 import '../Views/LoginPage.dart';
 import '../Views/HistoryPage.dart';
 import '../Views/SavePage.dart';
-import '../Views/SettingPage.dart';
+import '../Views/UserPage.dart';
 import '../Util/DataUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:async';
-import '../Widget/SettingBody.dart';
+import '../Widget/UserBody.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -41,7 +41,7 @@ class _SettingPageState extends State<SettingPage> {
     if(_isLogin==null || _isLogin==false){
       return Scaffold(
         appBar: AppBar(
-        title: Text('软件设置'),
+        title: Text('用户设置'),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -51,7 +51,7 @@ class _SettingPageState extends State<SettingPage> {
     }else{
       return Scaffold(
         appBar: AppBar(
-        title: Text('软件设置'),
+        title: Text('用户设置'),
         centerTitle: true,
         elevation: 0.0,
       ),

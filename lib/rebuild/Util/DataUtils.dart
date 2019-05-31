@@ -7,6 +7,27 @@ class DataUtils{
   // 设置shared_preferences中存储两个数据所用的"key",类似于变量名故使用String
   static const String SP_USERNAME="username";
   static const String SP_IS_LOGIN = "isLogin";
+  static const String SP_FONT_SIZE = "fontSize";
+
+  // 初始化字体大小为17
+  static initFontSize()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(SP_FONT_SIZE, 17);
+  }
+
+  // 获取当前字体大小
+  static Future<int> getFontSize()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int fontSize = prefs.getInt(SP_FONT_SIZE);
+    return  fontSize;
+  }
+
+  // 设置字体大小
+  static setFontSize(int fontSize)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(SP_FONT_SIZE, fontSize);
+  }
+
 
   // 登录后写入用户信息
   static setLoginStatus(String username) async{
@@ -37,6 +58,7 @@ class DataUtils{
     await prefs.setBool(SP_IS_LOGIN, false);
     await prefs.setString(SP_USERNAME, "");
   }
+  
 }
 
 

@@ -51,6 +51,7 @@ class _HistoryPageState extends State<HistoryPage> {
     }else{
       String _url = "http://111.231.57.151:8000/history/" + _username + '/' + "clear/all";
       await Dio().delete(_url);
+      debugPrint('清空历史记录: $_url');
       showToast('清除成功');
       // 重绘背景组件
       setState(() {
