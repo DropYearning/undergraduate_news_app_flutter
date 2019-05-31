@@ -216,7 +216,7 @@ class _DetailPageState extends State<DetailPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.open_in_new),
         onPressed: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => WebNewsVisit(link:newsItemWithHTML.link)));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SourcePage(link:newsItemWithHTML.link)));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

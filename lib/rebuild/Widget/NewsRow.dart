@@ -132,7 +132,7 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
           child: new Material(
               child: new InkWell(
                 child: new Container(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: new Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -147,74 +147,77 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
                               color: _changeColor(),
                             ),
                           )),
-                      new Row(
-                        // 三个元素在主轴(横轴)上分散排列
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          new Container(
-                            padding: const EdgeInsets.all(0.0),
-                            // 插入新闻来源
-                            child: new Text(
-                              "${widget.newsItem.source}",
-                              style: new TextStyle(
-                                  fontSize: 16.0, color: Colors.grey),
-                            ),
-                          ),
-                          new Container(
-                              padding: const EdgeInsets.all(0.0),
-                              // 插入新闻时间
+                      new Container(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: Row(
+                          // 三个元素在主轴(横轴)上分散排列
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Container(
+                              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                              // 插入新闻来源
                               child: new Text(
-                                modifyTime(),
+                                "${widget.newsItem.source}",
                                 style: new TextStyle(
                                     fontSize: 16.0, color: Colors.grey),
-                              )),
-                          new Container(
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.all(0.0),
-                              // 增加一个弹出式菜单
-                              child: Row(
-                                children: <Widget>[
-                                  new PopupMenuButton(
-                                    //菜单选项点击事件
-                                    onSelected: (value) async {
-                                      //print("点击了$value选项");
-                                      if(value == '1'){
-                                        // 添加收藏记录
-                                        String _username =await DataUtils.getUsername();
-                                        if(_username != ""){
-                                          await addSave(_username);
-                                          showToast("收藏成功");
-                                        }else{
-                                          showToast("请先登录");
+                              ),
+                            ),
+                            new Container(
+                                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                // 插入新闻时间
+                                child: new Text(
+                                  modifyTime(),
+                                  style: new TextStyle(
+                                      fontSize: 16.0, color: Colors.grey),
+                                )),
+                            new Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                // 增加一个弹出式菜单
+                                child: Row(
+                                  children: <Widget>[
+                                    new PopupMenuButton(
+                                      //菜单选项点击事件
+                                      onSelected: (value) async {
+                                        //print("点击了$value选项");
+                                        if(value == '1'){
+                                          // 添加收藏记录
+                                          String _username =await DataUtils.getUsername();
+                                          if(_username != ""){
+                                            await addSave(_username);
+                                            showToast("收藏成功");
+                                          }else{
+                                            showToast("请先登录");
+                                          }
+                                        }else if(value == '2'){
+                                          // 跳转推荐结果列表
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
                                         }
-                                      }else if(value == '2'){
-                                        // 跳转推荐结果列表
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.more_horiz,
-                                      color: Colors.grey,
+                                      },
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        color: Colors.grey,
+                                      ),
+                                      itemBuilder: (BuildContext context) => [
+                                            PopupMenuItem(
+                                              value: '1',
+                                              child: Text(
+                                                '添加到我的收藏',
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              value: '2',
+                                              child: Text(
+                                                '推荐更多相似新闻',
+                                              ),
+                                            ),
+                                          ],
                                     ),
-                                    itemBuilder: (BuildContext context) => [
-                                          PopupMenuItem(
-                                            value: '1',
-                                            child: Text(
-                                              '添加到我的收藏',
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            value: '2',
-                                            child: Text(
-                                              '推荐更多相似新闻',
-                                            ),
-                                          ),
-                                        ],
-                                  ),
-                                ],
-                              )),
-                        ],
-                      )
+                                  ],
+                                )),
+                          ],
+                        )
+                      ), 
                     ],
                   ),
                 ),
@@ -320,7 +323,7 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
           child: new Material(
               child: new InkWell(
                 child: new Container(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: new Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -335,94 +338,100 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
                               color: _changeColor(),
                             ),
                           )),
-                      new Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          new Expanded(
-                              child: new Container(
-                                  padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                                  child: AspectRatio(
-                                    aspectRatio: 16 / 9,
-                                    child: Image.network(
-                                      widget.newsItem.picurl1,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )))
-                        ],
+                      new Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              new Expanded(
+                                  child: new Container(
+                                      padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                                      child: AspectRatio(
+                                        aspectRatio: 16 / 9,
+                                        child: Image.network(
+                                          widget.newsItem.picurl1,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )))
+                            ],
+                        ),
                       ),
-                      new Row(
-                        // 三个元素在主轴(横轴)上分散排列
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          new Container(
-                            padding: const EdgeInsets.all(0.0),
-                            // 插入新闻来源
-                            child: new Text(
-                              "${widget.newsItem.source}  ",
-                              style: new TextStyle(
-                                  fontSize: 16.0, color: Colors.grey),
-                            ),
-                          ),
-                          new Container(
-                              padding: const EdgeInsets.all(0.0),
-                              // 插入新闻发布时间
+                      new Container(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: new Row(
+                           // 三个元素在主轴(横轴)上分散排列
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Container(
+                              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                              // 插入新闻来源
                               child: new Text(
-                                modifyTime(),
+                                "${widget.newsItem.source}  ",
                                 style: new TextStyle(
                                     fontSize: 16.0, color: Colors.grey),
-                              )),
-                          new Container(
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.all(0.0),
-                              // 增加一个弹出式菜单
-                              child: Row(
-                                children: <Widget>[
-                                  new PopupMenuButton(
-                                    //
-                                    onSelected: (value) async {
-                                      //print("点击了$value选项");
-                                      if(value == '1'){
-                                        // 添加收藏记录
-                                        String _username =await DataUtils.getUsername();
-                                        if(_username != ""){
-                                          await addSave(_username);
-                                          showToast("收藏成功");
-                                        }else{
-                                          showToast("请先登录");
+                              ),
+                            ),
+                            new Container(
+                                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                // 插入新闻发布时间
+                                child: new Text(
+                                  modifyTime(),
+                                  style: new TextStyle(
+                                      fontSize: 16.0, color: Colors.grey),
+                                )),
+                            new Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                                // 增加一个弹出式菜单
+                                child: Row(
+                                  children: <Widget>[
+                                    new PopupMenuButton(
+                                      //
+                                      onSelected: (value) async {
+                                        //print("点击了$value选项");
+                                        if(value == '1'){
+                                          // 添加收藏记录
+                                          String _username =await DataUtils.getUsername();
+                                          if(_username != ""){
+                                            await addSave(_username);
+                                            showToast("收藏成功");
+                                          }else{
+                                            showToast("请先登录");
+                                          }
+                                        }else if(value == '2'){
+                                          // 跳转推荐结果列表
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
                                         }
-                                      }else if(value == '2'){
-                                        // 跳转推荐结果列表
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ResultPage(newsItem: widget.newsItem,)));
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.more_horiz,
-                                      color: Colors.grey,
+                                      },
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        color: Colors.grey,
+                                      ),
+                                      itemBuilder: (BuildContext context) => [
+                                            PopupMenuItem(
+                                              value: '1',
+                                              child: Text(
+                                                '添加到我的收藏',
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              value: '2',
+                                              child: Text(
+                                                '推荐更多相似新闻',
+                                              ),
+                                            ),
+                                          ],
                                     ),
-                                    itemBuilder: (BuildContext context) => [
-                                          PopupMenuItem(
-                                            value: '1',
-                                            child: Text(
-                                              '添加到我的收藏',
-                                            ),
-                                          ),
-                                          PopupMenuItem(
-                                            value: '2',
-                                            child: Text(
-                                              '推荐更多相似新闻',
-                                            ),
-                                          ),
-                                        ],
-                                  ),
                                 ],
                               )),
-                        ],
-                      )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              color: Colors.transparent),
+              color: Colors.transparent
+            ),
         ),
       );
   }

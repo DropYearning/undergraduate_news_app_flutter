@@ -7,6 +7,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 // 显示管理后台的页面
 class XadminPage extends StatelessWidget {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  
   @override
   Widget build(BuildContext context) {
     Widget webScreen = new WebviewScaffold(
