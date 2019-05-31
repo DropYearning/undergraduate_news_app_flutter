@@ -1,8 +1,8 @@
 /*
  * @Author: Brightzh 
  * @Date: 2019-05-30 22:32:13 
- * @Last Modified by:   Brightzh 
- * @Last Modified time: 2019-05-30 22:32:13 
+ * @Last Modified by: Brightzh
+ * @Last Modified time: 2019-05-31 14:41:59
  */
 
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import '../Widget/DetailBody.dart';
 import '../Views/WebNewsPage.dart';
 import '../Util/DataUtils.dart';
 import '../Widget/MyToast.dart';
+import 'package:flutter/services.dart';
 
 // 各个频道对应的英文
 Map<String, String> channelNameToEng = {
@@ -169,8 +170,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     // 下面的这个if/else判断十分重要, 因为DIO请求newsItemWithHTML是异步进行的,Setstate方法会使组件被重绘
-    // 因此在绘制buildDetailBody组件之前,必须保证newsItemWithHTML中已经得到了要请求的数据,否则会出现called on null
-    // 错误
+    // 因此在绘制buildDetailBody组件之前,必须保证newsItemWithHTML中已经得到了要请求的数据,否则会出现called on null错误
     if (newsItemWithHTML.title == null) {
       return Scaffold(
         appBar: AppBar(
@@ -193,14 +193,21 @@ class _DetailPageState extends State<DetailPage> {
       return Scaffold(
       appBar: AppBar(
         title: Text('新闻详情'),
-        // TODO: 完成分享新闻详情按钮
-        actions: <Widget>[IconButton(icon: _changeIcon(), onPressed: () async{ 
-          if(isSaved == false){
-            await addSave();
-          }else{
-            await cancelSave();
-          }
-        },)],
+        actions: <Widget>[
+          IconButton(icon: _changeIcon(), onPressed: () async{ 
+              if(isSaved == false){
+                await addSave();
+              }else{
+                await cancelSave();
+              }
+            },
+          ),
+          IconButton(icon: Icon(Icons.share), onPressed: () async{ 
+              Clipboard.setData(new ClipboardData(text:newsItemWithHTML.link));
+              showToast("新闻链接已粘贴到剪贴板");
+            },
+          ),
+        ],
         elevation: 0.0,
         centerTitle: true,
       ),

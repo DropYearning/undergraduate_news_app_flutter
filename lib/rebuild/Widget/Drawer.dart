@@ -72,6 +72,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
+            Divider(), 
             ListTile(
               leading: Icon(Icons.settings, size: 25.0,),
               title: Text('软件设置', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
@@ -80,7 +81,6 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage()));
               },
             ),
-            Divider(),
             ListTile(
               leading: Icon(Icons.add_to_home_screen, size: 25.0,),
               title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
@@ -144,6 +144,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => HistoryPage()));
             },
           ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.settings, size: 25.0,),
             title: Text('软件设置', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
@@ -151,7 +152,6 @@ class _MyDrawerState extends State<MyDrawer> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage()));
             },
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.add_to_home_screen, size: 25.0,),
             title: Text('后台管理', textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),

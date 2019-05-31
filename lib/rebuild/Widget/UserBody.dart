@@ -187,21 +187,6 @@ class _SettingPageBodyLogedState extends State<SettingPageBodyLoged> {
             size: 25.0,
           ),
         ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.settings,
-        //     size: 25.0,
-        //   ),
-        //   title: Text('App设置',
-        //       textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-        //   onTap: () {
-            
-        //   },
-        //   trailing: Icon(
-        //     Icons.keyboard_arrow_right,
-        //     size: 25.0,
-        //   ),
-        // ),
       ],
     );
   }
@@ -335,21 +320,6 @@ class _SettingPageBodyUnlogedState extends State<SettingPageBodyUnloged> {
             size: 25.0,
           ),
         ),
-        // ListTile(
-        //   leading: Icon(
-        //     Icons.settings,
-        //     size: 25.0,
-        //   ),
-        //   title: Text('App设置',
-        //       textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0)),
-        //   onTap: () {
-            
-        //   },
-        //   trailing: Icon(
-        //     Icons.keyboard_arrow_right,
-        //     size: 25.0,
-        //   ),
-        // ),
       ],
     );
   }
