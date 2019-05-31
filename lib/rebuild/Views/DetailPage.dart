@@ -1,3 +1,10 @@
+/*
+ * @Author: Brightzh 
+ * @Date: 2019-05-30 22:32:13 
+ * @Last Modified by:   Brightzh 
+ * @Last Modified time: 2019-05-30 22:32:13 
+ */
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:async';
@@ -36,6 +43,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   // 一个请求例子(http://111.231.57.151:8000/detail/edu/ee5299b03326c1f816031f912dae31d7)
   final baseUrl = "http://111.231.57.151:8000/detail/";
+  final historyUrl = "http://111.231.57.151:8000/history/";
   NewsDetail newsItemWithHTML = new NewsDetail();
   bool isSaved = false;
   bool isLogin;
@@ -87,6 +95,18 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
+  // // 添加访问记录
+  // addHistory()async{
+  //   if(username =="" || isLogin == null || isLogin == false){
+  //     //do nothing
+  //   }else{
+  //     String _url = historyUrl + username + "/" + channelNameToEng [widget.news_channel] + "/" + widget.news_id;
+  //     debugPrint('添加访问记录: $_url');
+  //     await Dio().post(_url);
+  //   }
+  // }
+
+  // 添加收藏
   addSave() async{
     // 仅当有用户登录时添加记录
     if(username =="" || isLogin == null || isLogin == false){
@@ -102,6 +122,7 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
+  // 取消收藏
   cancelSave() async{
     String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[widget.news_channel] + "/" + widget.news_id;
         debugPrint('取消收藏记录: $_url');
@@ -112,6 +133,7 @@ class _DetailPageState extends State<DetailPage> {
         showToast("取消成功");
   }
 
+  // 请求新闻详情
   fetchNewsDetail() async {
     String detailUrl = baseUrl +
         channelNameToEng[widget.news_channel] +

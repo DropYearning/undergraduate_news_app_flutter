@@ -41,13 +41,13 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
   final saveUrl = "http://111.231.57.151:8000/save/";
   final historyUrl = "http://111.231.57.151:8000/history/";
   
-  bool isLogin;
-  String username;
+  // bool isLogin;
+  // String username;
   bool isClicked = false;
 
   @override
   void initState() {
-    checkLogin();
+    // checkLogin();
     super.initState();
   }
 
@@ -71,17 +71,17 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
     return widget.newsItem.source+ "    " +outputTime;
   }
 
-  // 检查登录状态
-  checkLogin()async{
-    String _username = await DataUtils.getUsername();
-    bool _isLogin = await DataUtils.getIslogin();
-    if(mounted){
-      setState(() {
-        isLogin = _isLogin;
-        username = _username;
-      });
-    }
-  }
+  // // 检查登录状态
+  // checkLogin()async{
+  //   String _username = await DataUtils.getUsername();
+  //   bool _isLogin = await DataUtils.getIslogin();
+  //   if(mounted){
+  //     setState(() {
+  //       isLogin = _isLogin;
+  //       username = _username;
+  //     });
+  //   }
+  // }
 
   // 添加收藏
   addSave(String username)async{
@@ -92,10 +92,12 @@ class _NewsRowWithoutPicState extends State<NewsRowWithoutPic> {
 
   // 添加访问记录
   addHistory()async{
-    if(username =="" || isLogin == null || isLogin == false){
+    String _username = await DataUtils.getUsername();
+    bool _isLogin = await DataUtils.getIslogin();
+    if(_username =="" || _isLogin == null || _isLogin == false){
       //do nothing
     }else{
-      String _url = historyUrl + username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
+      String _url = historyUrl + _username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
       debugPrint('添加访问记录: $_url');
       await Dio().post(_url);
     }
@@ -236,13 +238,13 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
   
   final saveUrl = "http://111.231.57.151:8000/save/";
   final historyUrl = "http://111.231.57.151:8000/history/";
-  bool isLogin;
-  String username;
+  // bool isLogin;
+  // String username;
   bool isClicked = false;
 
   @override
   void initState() {
-    checkLogin();
+    // checkLogin();
     super.initState();
   }
 
@@ -256,24 +258,26 @@ class _NewsRowWithPicState extends State<NewsRowWithPic> {
     return outputTime;
   }
 
-  // 检查登录状态
-  checkLogin()async{
-    String _username = await DataUtils.getUsername();
-    bool _isLogin = await DataUtils.getIslogin();
-    if(mounted){
-      setState(() {
-        isLogin = _isLogin;
-        username = _username;
-      });
-    }
-  }
+  // // 检查登录状态
+  // checkLogin()async{
+  //   String _username = await DataUtils.getUsername();
+  //   bool _isLogin = await DataUtils.getIslogin();
+  //   if(mounted){
+  //     setState(() {
+  //       isLogin = _isLogin;
+  //       username = _username;
+  //     });
+  //   }
+  // }
 
   // 添加访问记录
   addHistory()async{
-    if(username =="" || isLogin == null || isLogin == false){
+    String _username = await DataUtils.getUsername();
+    bool _isLogin = await DataUtils.getIslogin();
+    if(_username =="" || _isLogin == null || _isLogin == false){
       //do nothing
     }else{
-      String _url = historyUrl + username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
+      String _url = historyUrl + _username + "/" + channelNameToEng [widget.newsItem.channelname] + "/" + widget.newsItem.id;
       debugPrint('添加访问记录: $_url');
       await Dio().post(_url);
     }
