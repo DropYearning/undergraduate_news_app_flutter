@@ -126,21 +126,27 @@ class _RecommendListState extends State<RecommendList>  with AutomaticKeepAliveC
 
             // 设置下拉事件
             onRefresh: () async{
-              await fetchRcmList();
-              int updateCount = updateList.length;
-              await new Future.delayed(const Duration(seconds: 1), () {
-                if(updateCount !=0 ){
-                  //如果有更新
-                  setState(() {
-                    newsList.clear();
-                    newsList.addAll(newsListNew);
-                  });
-                  showToast('已为您推荐${updateCount}条新闻');
-                }else{
-                  //如果没有更新
-                  showToast('暂时没有更多哦');
-                }
-              });
+
+              // 若初始推荐列表数量不足,代表当日新闻不足以推进,做特殊处理
+              if(newsList.length<10){
+                showToast('暂时没有更多哦');
+              }else{
+                await fetchRcmList();
+                int updateCount = updateList.length;
+                await new Future.delayed(const Duration(seconds: 1), () {
+                  if(updateCount !=0 ){
+                    //如果有更新
+                    setState(() {
+                      newsList.clear();
+                      newsList.addAll(newsListNew);
+                    });
+                    showToast('已为您推荐${updateCount}条新闻');
+                  }else{
+                    //如果没有更新
+                    showToast('暂时没有更多哦');
+                  }
+                });
+              }
             },
             // 推荐频道没有上拉事件
             loadMore: () async {
