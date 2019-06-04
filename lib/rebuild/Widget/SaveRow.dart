@@ -54,6 +54,17 @@ class _SaveRowState extends State<SaveRow> {
     showToast("取消成功");
   }
 
+  // 添加收藏
+  addSave() async{
+    String username = await DataUtils.getUsername();
+    String _url = "http://111.231.57.151:8000/save/" + username + "/" + channelNameToEng[widget.saveItem.news_channel] + "/" + widget.saveItem.news_id;
+    debugPrint('添加收藏记录: $_url');
+    await Dio().post(_url);
+    showToast("收藏成功");
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -65,10 +76,15 @@ class _SaveRowState extends State<SaveRow> {
       trailing: new IconButton(
         icon:_changeIcon(), 
         onPressed:()async{
+          if(isClicked == false){
+            await cancelSave();
+          }else{
+            await addSave();
+          }
           setState(() {
             isClicked = !isClicked;
           });
-          await cancelSave();
+          
         }),
     );
   }
