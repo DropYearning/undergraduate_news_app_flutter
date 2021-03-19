@@ -3,13 +3,13 @@
 毕业设计《基于Android的新闻推荐客户端设计与实现》 基于Flutter的移动应用端实现
 
 ## TODO
-- [ ] 实现Tab栏+底栏的View跳转
+- [x] 实现Tab栏+底栏的View跳转
 - [x] 注册登陆功能+页面
 - [x] 用户历史页
 - [x] 用户收藏页
 - [x] 设置页
 - [x] 推荐频道
-- [ ] 用户个性化推荐
+- [x] 用户个性化推荐
 
 ## 效果图
 ![新闻列表](https://pic-1253509712.cos.ap-shanghai.myqcloud.com/%E6%96%B0%E9%97%BB%E5%88%97%E8%A1%A8.gif)![新闻详情](https://pic-1253509712.cos.ap-shanghai.myqcloud.com/%E6%96%B0%E9%97%BB%E8%AF%A6%E6%83%85.gif))
