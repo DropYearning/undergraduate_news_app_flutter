@@ -1,4 +1,4 @@
-# HDU_news_app_flutter
+# undergraduate_news_app_flutter
 
 毕业设计《基于Android的新闻推荐客户端设计与实现》 基于Flutter的移动应用端实现
 
